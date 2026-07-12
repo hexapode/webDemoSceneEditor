@@ -15,7 +15,7 @@
         <nav class="menu" aria-label="Main menu">
           <button data-action="new">New</button><button data-action="save">Save</button><button data-action="export">Export Demo</button><button id="demosBtn">Demos</button><button id="tutorialsBtn">Tutorials</button>
         </nav>
-        <div class="project-title"><i></i><input id="projectName" value="NEON CATHEDRAL" aria-label="Project name"/><span id="saveState">AUTOSAVED</span></div>
+        <div class="project-title"><i></i><input id="projectName" value="HAHAHACK · ABSURD MACHINE" aria-label="Project name"/><span id="saveState">AUTOSAVED</span></div>
         <div class="top-actions">
           <button class="compat-pill" id="compatBtn" title="Werkkzeug4 compatibility coverage"><i></i><span>WZ4 CATALOG</span><b>374 / 374</b></button>
           <div class="audio-controls">
@@ -44,6 +44,7 @@
               <div class="viewport-actions"><span id="resolution">1280 × 720</span><button id="gridBtn" class="active" title="Toggle grid">#</button><button id="fullscreenBtn" title="Fullscreen">⛶</button></div>
             </div>
             <canvas id="glCanvas"></canvas>
+            <div class="scene-overlay" id="sceneOverlay" aria-label="Scene text output"></div>
             <div class="texture-mode-badge" id="textureModeBadge" hidden><i></i><span>TEXTURE OUTPUT</span><b>ANIMATED · GPU</b></div>
             <div class="audio-meter" id="audioMeter" aria-label="Audio spectrum"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
             <div class="viewport-hud"><span><i></i> LIVE</span><span id="fps">60 FPS</span><span>WEBGL 2</span></div>
@@ -81,8 +82,8 @@
         <div class="resize-handle resize-timeline" id="resizeTimeline" role="separator" aria-label="Resize timeline" aria-orientation="horizontal"></div>
         <div class="transport">
           <button id="toStart">|◀</button><button id="prevFrame">◀</button><button id="playBtn" class="transport-play">▶</button><button id="nextFrame">▶</button>
-          <div class="timecode"><span id="timecode">00:00:00</span><small>/ 00:12:00</small></div>
-          <label>BPM <input id="bpm" type="number" min="40" max="240" value="128" /></label>
+          <div class="timecode"><span id="timecode">00:00:00</span><small id="durationCode">/ 01:00:00</small></div>
+          <label>BPM <input id="bpm" type="number" min="40" max="240" value="132" /></label>
           <button id="loopBtn" class="active">↻ LOOP</button>
         </div>
         <div class="tracks-label"><span>TRACKS</span><button id="addTrack">＋</button></div>
