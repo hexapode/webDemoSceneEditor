@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090b0d" />
+    <title>WERKKZEUG — WebGL Demo Editor</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="overrides.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <button class="brand" id="aboutBtn" title="About Werkkzeug"><span class="brand-mark">WZ</span><span>WERKKZEUG</span><em>WEBGL</em></button>
+        <nav class="menu" aria-label="Main menu">
+          <button data-action="new">New</button><button data-action="save">Save</button><button data-action="export">Export Demo</button><button id="demosBtn">Demos</button><button id="tutorialsBtn">Tutorials</button>
+        </nav>
+        <div class="project-title"><i></i><input id="projectName" value="NEON CATHEDRAL" aria-label="Project name"/><span id="saveState">AUTOSAVED</span></div>
+        <div class="top-actions">
+          <button class="compat-pill" id="compatBtn" title="Werkkzeug4 compatibility coverage"><i></i><span>WZ4 CATALOG</span><b>374 / 374</b></button>
+          <div class="audio-controls">
+            <button class="audio-toggle" id="audioToggle" title="Enable Web Audio"><span>♪</span><b>SOUND OFF</b></button>
+            <input id="masterVolume" type="range" min="0" max="1" step="0.01" value="0.42" aria-label="Master volume" />
+          </div>
+          <button class="icon-btn" id="undoBtn" title="Undo (⌘Z)">↶</button>
+          <button class="icon-btn" id="redoBtn" title="Redo (⇧⌘Z)">↷</button>
+          <button class="run-btn" id="runBtn"><span class="play-symbol">▶</span><span>RUN DEMO</span></button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="library panel">
+          <div class="panel-head"><span>OPERATOR LIBRARY</span><button class="icon-btn collapse" title="Collapse">‹</button></div>
+          <label class="search"><span>⌕</span><input id="nodeSearch" placeholder="Search operators…" /></label>
+          <div id="operatorList" class="operator-list"></div>
+          <div class="library-foot"><span><kbd>⇥</kbd> QUICK ADD</span><span id="operatorCount">374 WZ4 OPS</span></div>
+          <div class="resize-handle resize-library" id="resizeLibrary" role="separator" aria-label="Resize operator library" aria-orientation="vertical"></div>
+        </aside>
+
+        <section class="center-stage">
+          <div class="viewport panel">
+            <div class="viewport-toolbar">
+              <div class="segmented" id="viewMode"><button data-view="perspective" class="active">PERSPECTIVE</button><button data-view="camera">CAMERA 01</button></div>
+              <div class="viewport-actions"><span id="resolution">1280 × 720</span><button id="gridBtn" class="active" title="Toggle grid">#</button><button id="fullscreenBtn" title="Fullscreen">⛶</button></div>
+            </div>
+            <canvas id="glCanvas"></canvas>
+            <div class="texture-mode-badge" id="textureModeBadge" hidden><i></i><span>TEXTURE OUTPUT</span><b>ANIMATED · GPU</b></div>
+            <div class="audio-meter" id="audioMeter" aria-label="Audio spectrum"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="viewport-hud"><span><i></i> LIVE</span><span id="fps">60 FPS</span><span>WEBGL 2</span></div>
+            <div class="axis"><b class="x">X</b><b class="y">Y</b><b class="z">Z</b></div>
+            <div id="webglError" class="webgl-error" hidden>WebGL 2 is unavailable in this browser.</div>
+          </div>
+
+          <div class="resize-handle resize-viewport" id="resizeViewport" role="separator" aria-label="Resize viewport and graph" aria-orientation="horizontal"></div>
+
+          <div class="graph panel" id="graphPanel">
+            <div class="graph-head">
+              <div class="tabs" id="graphTabs"><button class="active">SCENE</button><button>TEXTURES</button><button>POST FX</button><button>AUDIO</button></div>
+              <div class="graph-tools"><button id="frameBtn" title="Frame all">⌗</button><button id="addNodeBtn" class="add-node">＋ ADD OPERATOR</button></div>
+            </div>
+            <div class="graph-canvas" id="graphCanvas">
+              <svg id="wires" aria-hidden="true"></svg>
+              <div id="nodes"></div>
+              <div class="minimap" id="minimap"><span></span></div>
+              <div class="zoom-controls"><button id="zoomOut">−</button><span id="zoomLabel">100%</span><button id="zoomIn">＋</button></div>
+              <div class="add-menu" id="addMenu" hidden></div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="inspector panel">
+          <div class="panel-head"><span>INSPECTOR</span><span class="node-id" id="nodeId">MAT_04</span></div>
+          <div class="inspector-title"><div class="type-icon material">◈</div><div><strong id="inspectorName">Iridescent Metal</strong><span id="inspectorType">MATERIAL OPERATOR</span></div><button id="enableNode" class="toggle active" aria-label="Enable node"><i></i></button></div>
+          <div id="inspectorContent"></div>
+          <div class="inspector-tip"><span>✦</span><p><strong>PROCEDURAL SIGNAL</strong>This operator evaluates every frame. Visual and audio parameters can be animated from the timeline.</p></div>
+          <div class="resize-handle resize-inspector" id="resizeInspector" role="separator" aria-label="Resize inspector" aria-orientation="vertical"></div>
+        </aside>
+      </main>
+
+      <section class="timeline panel">
+        <div class="resize-handle resize-timeline" id="resizeTimeline" role="separator" aria-label="Resize timeline" aria-orientation="horizontal"></div>
+        <div class="transport">
+          <button id="toStart">|◀</button><button id="prevFrame">◀</button><button id="playBtn" class="transport-play">▶</button><button id="nextFrame">▶</button>
+          <div class="timecode"><span id="timecode">00:00:00</span><small>/ 00:12:00</small></div>
+          <label>BPM <input id="bpm" type="number" min="40" max="240" value="128" /></label>
+          <button id="loopBtn" class="active">↻ LOOP</button>
+        </div>
+        <div class="tracks-label"><span>TRACKS</span><button id="addTrack">＋</button></div>
+        <div class="timeline-body">
+          <div class="track-names" id="trackNames"></div>
+          <div class="track-area" id="trackArea">
+            <div class="ruler" id="ruler"></div>
+            <div id="clips"></div>
+            <div class="playhead" id="playhead"><i></i></div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="statusbar"><span><i class="green"></i> RENDERER READY</span><span id="statusMetrics">8 OPERATORS · WEB AUDIO READY · <b id="renderTime">2.1 MS</b></span><span class="shortcut-hint"><kbd>SPACE</kbd> PLAY/PAUSE <kbd>M</kbd> MUTE <kbd>DEL</kbd> DELETE <kbd>F</kbd> FRAME</span></footer>
+    </div>
+
+    <div class="modal" id="aboutModal" hidden>
+      <div class="modal-card"><button class="modal-close">×</button><span class="eyebrow">BROWSER-NATIVE DEMOSCENE TOOL</span><h1>WERKKZEUG <em>WEBGL + AUDIO</em></h1><p>A compact procedural playground inspired by Farbrausch’s legendary demo editor. Build a graph, tune live visual and sound operators, and sequence the result across the GPU and Web Audio.</p><button class="primary modal-close">ENTER THE TOOL</button></div>
+    </div>
+    <div class="modal" id="compatModal" hidden>
+      <div class="modal-card compat-card"><button class="modal-close" data-close="compatModal">×</button><span class="eyebrow">WERKKZEUG4 COMPATIBILITY</span><h1>374 <em>OPERATORS INDEXED</em></h1><p>The registry is generated from Farbrausch’s public <code>.ops</code> declarations. Every original operator can be searched, added, connected, saved and exported. Runtime parity is tracked separately so legacy DirectX/C++ effects are never mislabeled as WebGL implementations.</p><div id="compatFamilies" class="compat-families"></div><div class="compat-legend"><span><i class="native"></i>WEB-NATIVE</span><span><i class="schema"></i>SCHEMA COMPATIBLE</span></div></div>
+    </div>
+    <div class="modal" id="tutorialModal" hidden>
+      <div class="modal-card tutorial-modal-card"><button class="modal-close">×</button><span class="eyebrow">LEARN WERKKZEUG</span><h1>PREBUILT <em>TUTORIAL SCENES</em></h1><p>Load a complete project and follow the guided operator walkthrough. A local backup is created before the tutorial loads.</p><div class="tutorial-grid" id="tutorialGrid"></div></div>
+    </div>
+    <div class="modal" id="demoModal" hidden>
+      <div class="modal-card demo-modal-card"><button class="modal-close">×</button><span class="eyebrow">MADE IN WERKKZEUG WEB</span><h1>BUILT-IN <em>DEMOS</em></h1><p>Load a complete audiovisual scene as a starting point, remix it in the editor, or export it as an executable JPEG demo.</p><div class="demo-grid" id="demoGrid"></div></div>
+    </div>
+    <aside class="tutorial-guide" id="tutorialGuide" hidden>
+      <div class="tutorial-guide-head"><span id="tutorialProgress">STEP 1 / 4</span><button id="tutorialExit" title="Exit tutorial">×</button></div>
+      <strong id="tutorialStepTitle">The scene graph</strong><p id="tutorialStepBody"></p>
+      <div class="tutorial-guide-actions"><button id="tutorialPrev">← BACK</button><button id="tutorialNext">NEXT →</button></div>
+    </aside>
+    <input id="importFile" type="file" accept="application/json" hidden />
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

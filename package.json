@@ -1,0 +1,12 @@
+{
+  "name": "werkkzeug-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-pages.mjs",
+    "dev": "node server.mjs",
+    "start": "node server.mjs",
+    "extract:wz4": "node scripts/extract-wz4-operators.mjs"
+  }
+}
