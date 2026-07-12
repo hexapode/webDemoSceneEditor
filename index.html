@@ -40,7 +40,7 @@
         <section class="center-stage">
           <div class="viewport panel">
             <div class="viewport-toolbar">
-              <div class="segmented" id="viewMode"><button data-view="perspective" class="active">PERSPECTIVE</button><button data-view="camera">CAMERA 01</button></div>
+              <div class="viewport-left-tools"><div class="segmented" id="viewMode"><button data-view="perspective" class="active">PERSPECTIVE</button><button data-view="camera">CAMERA 01</button></div><div class="act-switcher" id="actSwitcher"><button id="prevAct" aria-label="Previous act">‹</button><label><span id="actCounter">ACT 1 / 6</span><select id="actSelector" aria-label="Demo act"><option value="0">ORBITAL CATHEDRAL</option><option value="1">CRYSTAL RECURSION</option><option value="2">SOLAR ORGANISM</option><option value="3">MONOLITH MULTIPLY</option><option value="4">ACID FRACTAL</option><option value="5">TOTAL CHAOS</option></select></label><button id="nextAct" aria-label="Next act">›</button></div></div>
               <div class="viewport-actions"><span id="resolution">1280 × 720</span><button id="gridBtn" class="active" title="Toggle grid">#</button><button id="fullscreenBtn" title="Fullscreen">⛶</button></div>
             </div>
             <canvas id="glCanvas"></canvas>
@@ -56,7 +56,7 @@
 
           <div class="graph panel" id="graphPanel">
             <div class="graph-head">
-              <div class="tabs" id="graphTabs"><button class="active">SCENE</button><button>TEXTURES</button><button>POST FX</button><button>AUDIO</button></div>
+              <div class="tabs" id="graphTabs"><button class="active" title="Scene and geometry graph">SCENE</button><button title="Procedural texture graph">TEXTURES</button><button title="Post-processing graph">POST FX</button><button title="WebAudio graph">AUDIO</button></div>
               <div class="graph-tools"><button id="frameBtn" title="Frame all">⌗</button><button id="addNodeBtn" class="add-node">＋ ADD OPERATOR</button></div>
             </div>
             <div class="graph-canvas" id="graphCanvas">
@@ -82,8 +82,8 @@
         <div class="resize-handle resize-timeline" id="resizeTimeline" role="separator" aria-label="Resize timeline" aria-orientation="horizontal"></div>
         <div class="transport">
           <button id="toStart">|◀</button><button id="prevFrame">◀</button><button id="playBtn" class="transport-play">▶</button><button id="nextFrame">▶</button>
-          <div class="timecode"><span id="timecode">00:00:00</span><small id="durationCode">/ 01:00:00</small></div>
-          <label>BPM <input id="bpm" type="number" min="40" max="240" value="132" /></label>
+          <div class="timecode"><span id="timecode">00:00:00</span><small id="durationCode">/ 00:30:00</small></div>
+          <label>BPM <input id="bpm" type="number" min="40" max="320" value="264" /></label>
           <button id="loopBtn" class="active">↻ LOOP</button>
         </div>
         <div class="tracks-label"><span>TRACKS</span><button id="addTrack">＋</button></div>

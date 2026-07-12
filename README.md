@@ -1,12 +1,21 @@
 # Werkkzeug WebGL
 
+**[Open the live demo](https://hexapode.github.io/webDemoSceneEditor/)**
+
 A browser-native procedural demo editor inspired by Farbrausch's Werkkzeug.
 
-The default project is **HAHAHACK · ABSURD MACHINE**, a finished 60-second
+The default project is **HAHAHACK · ABSURD MACHINE**, a finished 30-second
 audiovisual loop made for *hahahack — a hackathon for absurd + fun things with
-Codex*. It contains six ten-second visual acts, animated title cards, automated
-camera/material/post transitions, and a WebAudio score with evolving drums,
-bass, chords, and lead. Click **SOUND OFF** once to start the music.
+Codex*. Its six five-second worlds are an orbital cathedral, recursive crystal,
+solar metaball organism, multiplied monolith field, polar acid fractal, and
+dense finale swarm. The editable graph includes Fractal, Multiply, Grid Array,
+modulation, animated title, camera, material and output stages, backed by a
+WebAudio score with evolving drums, bass, chords, and lead. Click **SOUND OFF**
+once to start the music.
+
+Use the act selector above the viewport (or `[` and `]`) to jump between the six
+HAHAHACK worlds. The **SCENE**, **TEXTURES**, **POST FX**, and **AUDIO** tabs switch
+between the four operator graph workspaces; they do not change timeline acts.
 
 ## Run locally
 
@@ -51,8 +60,10 @@ This adapts the pixel-payload technique used by `demolishedcompressor` for PNG t
 - Procedural Web Audio soundtrack with drums, bass, pad, filtering and dynamics
 - Beat-synchronized audio/visual transport, master volume and live spectrum meter
 - Per-property modulation sockets with Beat, Half-beat, Bar, Sine, Envelope,
-  Noise, ten-second Act events, and external/pointer Event sources
+  Noise, five-second Act events, and external/pointer Event sources
 - Draggable procedural operator graph and operator library
+- Reliable inspector/keyboard node deletion with automatic wire cleanup
+- Per-node `(i)` guides covering purpose, usage, inputs, outputs, and runtime status
 - Independent Scene, Textures, Post FX and Audio graph workspaces
 - Resizable library, inspector, timeline and viewport/graph panels with persistent layout
 - Library-to-graph drag-and-drop plus zoom-correct node movement
