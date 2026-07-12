@@ -13,6 +13,14 @@ modulation, animated title, camera, material and output stages, backed by a
 WebAudio score with evolving drums, bass, chords, and lead. Click **SOUND OFF**
 once to start the music.
 
+The built-in gallery also includes **VOID BLOOM · A SIGNAL GARDEN**, a second
+complete project authored from an empty graph. Its four-part story—*The Seed
+Remembers*, *The Garden Wakes*, *Roots Eat the Signal*, and *We Become Light*—
+uses a dedicated WebGL signed-distance field for each chapter rather than the
+default demo geometry. The 24-second piece adds animated interference textures,
+a six-effect post chain, evolving WebAudio, chapter navigation, and paired title
+and subtitle narration. Open **Demos → Void Bloom** to load it.
+
 Use the act selector above the viewport (or `[` and `]`) to jump between the six
 HAHAHACK worlds. The **SCENE**, **TEXTURES**, **POST FX**, and **AUDIO** tabs switch
 between the four operator graph workspaces; they do not change timeline acts.
@@ -68,7 +76,7 @@ This adapts the pixel-payload technique used by `demolishedcompressor` for PNG t
 - Resizable library, inspector, timeline and viewport/graph panels with persistent layout
 - Library-to-graph drag-and-drop plus zoom-correct node movement
 - Four prebuilt tutorial projects with guided, workspace-aware walkthroughs
-- Six built-in audiovisual showcase demos with distinct procedural forms and palettes
+- Seven built-in audiovisual showcase demos, including the full-graph Void Bloom project
 - Context-sensitive parameter inspector
 - 12-second looping demo timeline with beat-synced animation
 - Local autosave with versioned project state
