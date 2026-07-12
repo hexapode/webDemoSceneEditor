@@ -17,6 +17,7 @@ const coreOperatorCatalog = [
 ];
 const operatorById=new Map(WZ4_OPERATORS.map(op=>[op.id,op]));
 const familyStyle={"Bitmap & Texture":["▧","texture"],"Mesh & Geometry":["◇","scene"],"Particles & Simulation":["✣","post"],"Material & Shading":["◈","material"],"Scene & Render":["◉","scene"],"Animation & Control":["⌁","signal"],"Audio Analysis":["♪","audio"],"Utility & Project FX":["⌘","post"]};
+const compatibilityGraphMode={"Bitmap & Texture":"textures","Audio Analysis":"audio","Utility & Project FX":"post"};
 const compatibilityCatalog=[...new Set(WZ4_OPERATORS.map(op=>op.family))].map(family=>({category:`WZ4 • ${family.toUpperCase()}`,compat:true,items:WZ4_OPERATORS.filter(op=>op.family===family).map(op=>[op.name,...familyStyle[family],"schema",op.id])}));
 const operatorCatalog=[...coreOperatorCatalog,...compatibilityCatalog];
 const operatorDocs={
@@ -86,7 +87,9 @@ function renderLibrary(filter="") {
   $("#operatorCount").textContent=`${WZ4_OPERATOR_COUNT} WZ4 OPS`;
 }
 
-function currentNodes(){return state.graphMode==="textures"?state.textureNodes:state.graphMode==="post"?state.postNodes:state.graphMode==="audio"?state.audioNodes:state.nodes;}
+function graphModeForStyle(style){return style==="texture"?"textures":style==="post"?"post":style==="audio"?"audio":"scene";}
+function nodesForMode(mode){return mode==="textures"?state.textureNodes:mode==="post"?state.postNodes:mode==="audio"?state.audioNodes:state.nodes;}
+function currentNodes(){return nodesForMode(state.graphMode);}
 function currentConnections(){return state.graphMode==="textures"?state.textureConnections:state.graphMode==="post"?state.postConnections:state.graphMode==="audio"?state.audioConnections:state.connections;}
 function allNodes(){return [...state.nodes,...state.textureNodes,...state.postNodes,...state.audioNodes];}
 function nodeMarkup(n) { return `<div class="node ${n.id===state.selected?"selected":""}" data-id="${n.id}" style="left:${n.x}px;top:${n.y}px;--node-color:${n.color};opacity:${n.enabled?1:.45}"><i class="port in" title="Input · drag to connect"></i><i class="port out" title="Output · drag to connect"></i><button class="node-info" type="button" aria-label="About ${n.name}" title="How to use ${n.name}">(i)</button><div class="node-head"><i></i><span>${n.name.toUpperCase()}</span></div><div class="node-preview">${n.kind.toUpperCase()}</div><div class="node-meta"><span>${n.id}</span><span>${n.value}</span></div></div>`; }
@@ -193,14 +196,14 @@ function renderInspector(){
 }
 
 function addNode(kind,position){
-  const all=operatorCatalog.flatMap(g=>g.items), item=all.find(x=>x[0]===kind)||[kind,"◇","scene"],mode=item[2]==="texture"?"textures":item[2]==="post"?"post":item[2]==="audio"?"audio":"scene",target=mode==="textures"?state.textureNodes:mode==="post"?state.postNodes:mode==="audio"?state.audioNodes:state.nodes,idx=target.length+1;
-  if(mode!==state.graphMode)switchGraphMode(mode);
+  const all=coreOperatorCatalog.flatMap(group=>group.items),item=all.find(entry=>entry[0]===kind)||[kind,"◇","scene"],mode=graphModeForStyle(item[2]),target=nodesForMode(mode),idx=target.length+1;
+  if(mode!==state.graphMode)activateWorkspace(mode);
   const colors={material:"#ff6d42",post:"#9b7bff",signal:"#55d887",scene:"#5da7ff",audio:"#55d887",texture:"#25c9cd"};
   const id=`OP_${String(allNodes().length+1).padStart(3,"0")}`, n={id,name:kind,type:`${item[2].toUpperCase()} OPERATOR`,kind,x:position?.x??120+(idx*47)%480,y:position?.y??45+(idx*31)%120,color:colors[item[2]],value:"LIVE",enabled:true};
   target.push(n);state.selected=id;$("#addMenu").hidden=true;renderGraph();renderInspector();updateSceneOverlays();autosave();
 }
 function addCompatibilityNode(spec,position){
-  if(!spec)return;const mode=spec.family==="Bitmap & Texture"?"textures":spec.family==="Audio Analysis"?"audio":"scene",target=mode==="textures"?state.textureNodes:mode==="audio"?state.audioNodes:state.nodes,idx=allNodes().length+1;if(mode!==state.graphMode)switchGraphMode(mode);
+  if(!spec)return;const mode=compatibilityGraphMode[spec.family]||"scene",target=nodesForMode(mode),idx=allNodes().length+1;if(mode!==state.graphMode)activateWorkspace(mode);
   const colors={"Bitmap & Texture":"#25c9cd","Mesh & Geometry":"#5da7ff","Particles & Simulation":"#9b7bff","Material & Shading":"#ff6d42","Scene & Render":"#f1b85b","Animation & Control":"#55d887","Audio Analysis":"#55d887","Utility & Project FX":"#9b7bff"};
   const id=`WZ_${String(idx).padStart(3,"0")}`,n={id,name:spec.name,type:`${spec.output} OPERATOR`,kind:spec.symbol,x:position?.x??80+(idx*43)%540,y:position?.y??35+(idx*29)%125,color:colors[spec.family],value:"SCHEMA",enabled:true,compat:{...spec}};
   target.push(n);state.selected=id;$("#addMenu").hidden=true;renderGraph();renderInspector();autosave();
