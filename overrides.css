@@ -30,6 +30,26 @@
 .scene-text { position:absolute; left:var(--text-x); top:var(--text-y); color:var(--text-color); font:900 var(--text-size)/.9 Inter,"Helvetica Neue",Arial,sans-serif; letter-spacing:.08em; white-space:nowrap; text-transform:uppercase; text-shadow:0 0 8px color-mix(in srgb,var(--text-color) 70%,transparent),0 5px 24px #000; transform:translate(-50%,-50%) rotate(var(--text-rotation)) translateY(var(--text-wave)); }
 .param-text { grid-column:2/4; min-width:0; height:25px; border:1px solid #2b3136; background:#0d1012; color:#d1d6d8; padding:0 7px; font-size:9px; }
 .native-runtime { margin:8px 9px; padding:7px 9px; border:1px solid #25372f; background:#0d1511; color:#629276; font-size:7px; letter-spacing:.7px; }
+.delete-node { margin-left:auto; padding:5px 6px; border:1px solid #412a2a; color:#b76565; font-size:6px; letter-spacing:.7px; }
+.delete-node:hover { border-color:#ff5a5a; color:#ff7777; background:#261313; }
+.inspector-title .toggle { margin-left:4px; }
+.node-info { position:absolute; z-index:6; right:4px; top:3px; width:18px; height:17px; border:1px solid #3b464c; border-radius:50%; background:#151a1d; color:#859198; font:700 7px/1 Arial; cursor:help; }
+.node-info:hover { border-color:var(--node-color); color:#fff; box-shadow:0 0 8px color-mix(in srgb,var(--node-color) 50%,transparent); }
+.node-head { padding-right:25px; }
+.node-help-card { width:min(570px,calc(100vw - 40px)); }
+.node-help-card h1 { margin-bottom:6px; }
+.node-help-usage { margin-top:16px; padding:12px; border:1px solid #29343a; background:#0d1113; }
+.node-help-usage strong { color:var(--cyan); font-size:7px; letter-spacing:1px; }
+.node-help-usage p { margin:6px 0 0; }
+.node-help-io { display:grid; grid-template-columns:1fr 1fr; gap:7px; margin-top:10px; }
+.node-help-io div { padding:8px; border:1px solid #252d31; color:#78858b; font-size:8px; }
+.node-help-io b { display:block; margin-bottom:3px; color:#b7c0c4; font-size:7px; letter-spacing:.7px; }
+.mod-row { display:grid; grid-template-columns:44px minmax(64px,1fr) 58px 34px; align-items:center; gap:5px; min-height:23px; margin:-2px 0 4px; padding-left:4px; border-left:1px solid #253b40; color:#53656a; font-size:7px; }
+.mod-row::before { content:"↯ MOD"; color:var(--cyan); font-weight:800; letter-spacing:.7px; }
+.mod-row select { min-width:0; height:20px; border:1px solid #26363a; background:#0b1113; color:#82a1a6; font-size:7px; }
+.mod-row input[type=range] { width:100%; height:2px; accent-color:var(--cyan); }
+.mod-row.inactive { opacity:.42; }
+.mod-value { text-align:right; color:#71888d; font-family:monospace; }
 
 .timeline {
   position: relative;

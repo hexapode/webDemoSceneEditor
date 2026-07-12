@@ -2,6 +2,12 @@
 
 A browser-native procedural demo editor inspired by Farbrausch's Werkkzeug.
 
+The default project is **HAHAHACK · ABSURD MACHINE**, a finished 60-second
+audiovisual loop made for *hahahack — a hackathon for absurd + fun things with
+Codex*. It contains six ten-second visual acts, animated title cards, automated
+camera/material/post transitions, and a WebAudio score with evolving drums,
+bass, chords, and lead. Click **SOUND OFF** once to start the music.
+
 ## Run locally
 
 ```bash
@@ -44,6 +50,8 @@ This adapts the pixel-payload technique used by `demolishedcompressor` for PNG t
 - Texture preview mode with live material mapping on the 3D scene
 - Procedural Web Audio soundtrack with drums, bass, pad, filtering and dynamics
 - Beat-synchronized audio/visual transport, master volume and live spectrum meter
+- Per-property modulation sockets with Beat, Half-beat, Bar, Sine, Envelope,
+  Noise, ten-second Act events, and external/pointer Event sources
 - Draggable procedural operator graph and operator library
 - Independent Scene, Textures, Post FX and Audio graph workspaces
 - Resizable library, inspector, timeline and viewport/graph panels with persistent layout
@@ -57,6 +65,11 @@ This adapts the pixel-payload technique used by `demolishedcompressor` for PNG t
 - Animated 2D fallback for browsers without an available GPU context
 
 Click **SOUND OFF** once to enable audio (browsers require a user gesture). Keyboard shortcuts: `Space` play/pause, `M` mute, `Delete` remove an operator, `F` frame the graph, and `Cmd/Ctrl+S` save locally.
+
+Every numeric inspector property has a modulation source and bipolar depth. A
+canvas click or keyboard event fires the **EVENT** source. External integrations
+can trigger it with `window.werkkzeugTrigger()` or by dispatching a
+`werkkzeug-trigger` event on `window`.
 
 ## Werkkzeug4 compatibility
 

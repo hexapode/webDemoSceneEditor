@@ -71,7 +71,7 @@
 
         <aside class="inspector panel">
           <div class="panel-head"><span>INSPECTOR</span><span class="node-id" id="nodeId">MAT_04</span></div>
-          <div class="inspector-title"><div class="type-icon material">◈</div><div><strong id="inspectorName">Iridescent Metal</strong><span id="inspectorType">MATERIAL OPERATOR</span></div><button id="enableNode" class="toggle active" aria-label="Enable node"><i></i></button></div>
+          <div class="inspector-title"><div class="type-icon material">◈</div><div><strong id="inspectorName">Iridescent Metal</strong><span id="inspectorType">MATERIAL OPERATOR</span></div><button id="deleteNode" class="delete-node" aria-label="Delete selected node" title="Delete selected node">DELETE</button><button id="enableNode" class="toggle active" aria-label="Enable node"><i></i></button></div>
           <div id="inspectorContent"></div>
           <div class="inspector-tip"><span>✦</span><p><strong>PROCEDURAL SIGNAL</strong>This operator evaluates every frame. Visual and audio parameters can be animated from the timeline.</p></div>
           <div class="resize-handle resize-inspector" id="resizeInspector" role="separator" aria-label="Resize inspector" aria-orientation="vertical"></div>
@@ -111,6 +111,9 @@
     </div>
     <div class="modal" id="demoModal" hidden>
       <div class="modal-card demo-modal-card"><button class="modal-close">×</button><span class="eyebrow">MADE IN WERKKZEUG WEB</span><h1>BUILT-IN <em>DEMOS</em></h1><p>Load a complete audiovisual scene as a starting point, remix it in the editor, or export it as an executable JPEG demo.</p><div class="demo-grid" id="demoGrid"></div></div>
+    </div>
+    <div class="modal" id="nodeHelpModal" hidden>
+      <div class="modal-card node-help-card"><button class="modal-close">×</button><span class="eyebrow" id="nodeHelpType">OPERATOR GUIDE</span><h1 id="nodeHelpTitle">OPERATOR</h1><p id="nodeHelpSummary"></p><div class="node-help-usage"><strong>HOW TO USE IT</strong><p id="nodeHelpUsage"></p></div><div class="node-help-io" id="nodeHelpIO"></div></div>
     </div>
     <aside class="tutorial-guide" id="tutorialGuide" hidden>
       <div class="tutorial-guide-head"><span id="tutorialProgress">STEP 1 / 4</span><button id="tutorialExit" title="Exit tutorial">×</button></div>
