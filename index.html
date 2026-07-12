@@ -62,7 +62,8 @@
             <div class="graph-canvas" id="graphCanvas">
               <svg id="wires" aria-hidden="true"></svg>
               <div id="nodes"></div>
-              <div class="minimap" id="minimap"><span></span></div>
+              <div class="graph-nav-hint">DRAG EMPTY SPACE TO PAN · WHEEL TO SLIDE · CTRL/CMD + WHEEL TO ZOOM</div>
+              <div class="minimap" id="minimap" role="button" tabindex="0" aria-label="Navigate node graph" title="Drag to navigate the node graph"><span></span></div>
               <div class="zoom-controls"><button id="zoomOut">−</button><span id="zoomLabel">100%</span><button id="zoomIn">＋</button></div>
               <div class="add-menu" id="addMenu" hidden></div>
             </div>

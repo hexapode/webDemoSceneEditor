@@ -71,7 +71,7 @@ const defaultTextureConnections=[["TEX_01","TEX_02"],["TEX_02","TEX_03"],["TEX_0
 const defaults = { shapeMode:0,color:"#ff3b8d", accent:"#5cf5ff", metallic:0.91, roughness:0.18, twist:1.4, bloom:0.92, vignette:.2, pulse:0.72, scale:1, exposure:1.2, texScale:4.8, texSpeed:.52, texWarp:1.65, texContrast:1.8, texKaleido:7, texMix:.86,multiplyCount:8,multiplySpread:1.25, audioCutoff:1320, audioDecay:0.3, audioDelay:0.22, audioDrive:0.64,showMix:1 };
 const DEFAULT_SCENE_VERSION=7;
 let state = { nodes: structuredClone(defaultNodes), connections: structuredClone(defaultConnections),textureNodes:structuredClone(defaultTextureNodes),textureConnections:structuredClone(defaultTextureConnections),postNodes:structuredClone(defaultPostNodes),postConnections:structuredClone(defaultPostConnections),audioNodes:structuredClone(defaultAudioNodes),audioConnections:structuredClone(defaultAudioConnections),graphMode:"scene",params:{...defaults}, audio:{enabled:false,volume:.42}, selected:"TXT_00", playing:true, looping:true, duration:30, time:0, bpm:264, zoom:1, history:[],showcase:true,sceneVersion:DEFAULT_SCENE_VERSION };
-let glState = null, lastFrame = performance.now(), fpsSmooth = 60, orbit = { yaw:0.15, pitch:0.1, distance:4.5 }, draggingNode = null, connectingPort = null;
+let glState = null, lastFrame = performance.now(), fpsSmooth = 60, orbit = { yaw:0.15, pitch:0.1, distance:4.5 }, draggingNode = null, connectingPort = null, graphPan={x:0,y:0};
 const audioEngine = { ctx:null, master:null, analyser:null, noise:null, nextTime:0, step:0, spectrum:null };
 let activeTutorial=null,tutorialStep=0,tutorialNavTime=0,lastExternalEvent=-99;
 
@@ -99,7 +99,7 @@ function setCurrentConnections(connections){
 }
 function constrainGraphNodes(){
   const canvas=$("#graphCanvas");if(!canvas)return;
-  $$(".node",canvas).forEach(element=>{const node=currentNodes().find(item=>item.id===element.dataset.id);if(!node)return;const maxX=Math.max(0,canvas.clientWidth/state.zoom-element.offsetWidth),maxY=Math.max(0,canvas.clientHeight/state.zoom-element.offsetHeight);node.x=Math.max(0,Math.min(maxX,node.x));node.y=Math.max(0,Math.min(maxY,node.y));element.style.left=`${node.x}px`;element.style.top=`${node.y}px`;});
+  $$(".node",canvas).forEach(element=>{const node=currentNodes().find(item=>item.id===element.dataset.id);if(!node)return;node.x=Math.max(0,node.x);node.y=Math.max(0,node.y);element.style.left=`${node.x}px`;element.style.top=`${node.y}px`;});
 }
 function finishConnection(event){
   if(!connectingPort||event.pointerId!==connectingPort.pointerId)return;
@@ -125,13 +125,13 @@ function renderGraph() {
       selectNode(el.dataset.id);
       if(e.button!==0||e.target.closest(".port,.node-info"))return;
       e.preventDefault();const n=currentNodes().find(x=>x.id===el.dataset.id),pointerId=e.pointerId,canvas=$("#graphCanvas");draggingNode={n,startX:n.x,startY:n.y,pointerX:e.clientX,pointerY:e.clientY,el};el.classList.add("dragging");
-      const move=event=>{if(!draggingNode||event.pointerId!==pointerId)return;const maxX=Math.max(0,canvas.clientWidth/state.zoom-el.offsetWidth),maxY=Math.max(0,canvas.clientHeight/state.zoom-el.offsetHeight);draggingNode.n.x=Math.max(0,Math.min(maxX,draggingNode.startX+(event.clientX-draggingNode.pointerX)/state.zoom));draggingNode.n.y=Math.max(0,Math.min(maxY,draggingNode.startY+(event.clientY-draggingNode.pointerY)/state.zoom));el.style.left=draggingNode.n.x+"px";el.style.top=draggingNode.n.y+"px";drawWires();};
+      const move=event=>{if(!draggingNode||event.pointerId!==pointerId)return;draggingNode.n.x=Math.max(0,draggingNode.startX+(event.clientX-draggingNode.pointerX)/state.zoom);draggingNode.n.y=Math.max(0,draggingNode.startY+(event.clientY-draggingNode.pointerY)/state.zoom);el.style.left=draggingNode.n.x+"px";el.style.top=draggingNode.n.y+"px";drawWires();};
       const up=event=>{if(!draggingNode||event.pointerId!==pointerId)return;el.classList.remove("dragging");draggingNode=null;window.removeEventListener("pointermove",move);window.removeEventListener("pointerup",up);window.removeEventListener("pointercancel",up);autosave();};window.addEventListener("pointermove",move);window.addEventListener("pointerup",up);window.addEventListener("pointercancel",up);
     };
     $$(".port",el).forEach(port=>port.onpointerdown=event=>startConnection(event,el.dataset.id,port.classList.contains("out")?"out":"in"));
     const info=$(".node-info",el);info.onpointerdown=event=>event.stopPropagation();info.onclick=event=>{event.stopPropagation();const node=currentNodes().find(item=>item.id===el.dataset.id);if(node)showNodeHelp(node);};
   });
-  requestAnimationFrame(()=>{constrainGraphNodes();drawWires();});
+  requestAnimationFrame(()=>{constrainGraphNodes();applyGraphTransform();});
 }
 function drawWires() {
   const area=$("#graphCanvas").getBoundingClientRect();
@@ -330,7 +330,7 @@ function updateAudioUI(){
 }
 
 function placeDroppedOperator(payload,clientX,clientY){
-  const canvas=$("#graphCanvas"),rect=canvas.getBoundingClientRect();if(clientX<rect.left||clientX>rect.right||clientY<rect.top||clientY>rect.bottom)return false;const position={x:Math.max(0,(clientX-rect.left)/state.zoom-63),y:Math.max(0,(clientY-rect.top)/state.zoom-35)};payload.opid?addCompatibilityNode(operatorById.get(payload.opid),position):addNode(payload.kind,position);return true;
+  const canvas=$("#graphCanvas"),rect=canvas.getBoundingClientRect();if(clientX<rect.left||clientX>rect.right||clientY<rect.top||clientY>rect.bottom)return false;const position={x:Math.max(0,(clientX-rect.left-graphPan.x)/state.zoom-63),y:Math.max(0,(clientY-rect.top-graphPan.y)/state.zoom-35)};payload.opid?addCompatibilityNode(operatorById.get(payload.opid),position):addNode(payload.kind,position);return true;
 }
 
 function bindOperatorCard(button){
@@ -345,6 +345,23 @@ function setupGraphDrop(){
   canvas.ondragover=e=>{if(e.dataTransfer.types.includes("application/x-werkkzeug-op")){e.preventDefault();e.dataTransfer.dropEffect="copy";}};
   canvas.ondragleave=e=>{if(!canvas.contains(e.relatedTarget))canvas.classList.remove("drop-ready");};
   canvas.ondrop=e=>{e.preventDefault();canvas.classList.remove("drop-ready");let payload;try{payload=JSON.parse(e.dataTransfer.getData("application/x-werkkzeug-op"));}catch{return;}placeDroppedOperator(payload,e.clientX,e.clientY);};
+}
+
+function applyGraphTransform(){
+  const nodes=$("#nodes"),canvas=$("#graphCanvas");if(!nodes||!canvas)return;nodes.style.transform=`translate(${graphPan.x}px,${graphPan.y}px) scale(${state.zoom})`;nodes.style.transformOrigin="0 0";canvas.style.backgroundPosition=`${graphPan.x}px ${graphPan.y}px`;$("#zoomLabel").textContent=`${Math.round(state.zoom*100)}%`;drawWires();
+}
+function frameGraph(){
+  const canvas=$("#graphCanvas"),nodes=currentNodes();if(!canvas||!nodes.length){graphPan={x:0,y:0};state.zoom=1;applyGraphTransform();return;}const padding=42,minX=Math.min(...nodes.map(node=>node.x)),minY=Math.min(...nodes.map(node=>node.y)),maxX=Math.max(...nodes.map(node=>node.x+126)),maxY=Math.max(...nodes.map(node=>node.y+82)),width=Math.max(1,maxX-minX),height=Math.max(1,maxY-minY);state.zoom=Math.max(.6,Math.min(1.4,Math.min((canvas.clientWidth-padding*2)/width,(canvas.clientHeight-padding*2)/height)));graphPan={x:(canvas.clientWidth-width*state.zoom)/2-minX*state.zoom,y:(canvas.clientHeight-height*state.zoom)/2-minY*state.zoom};applyGraphTransform();
+}
+function setupGraphNavigation(){
+  const canvas=$("#graphCanvas"),minimap=$("#minimap");let pan=null,minimapDrag=null;
+  const finish=event=>{if(pan&&(event.pointerId===undefined||event.pointerId===pan.id)){pan=null;canvas.classList.remove("panning");}if(minimapDrag&&(event.pointerId===undefined||event.pointerId===minimapDrag)){minimapDrag=null;}if(!pan&&!minimapDrag){window.removeEventListener("pointermove",move);window.removeEventListener("pointerup",finish);window.removeEventListener("pointercancel",finish);}};
+  const minimapMove=event=>{const rect=minimap.getBoundingClientRect(),nodes=currentNodes();if(!nodes.length)return;const minX=Math.min(...nodes.map(node=>node.x)),minY=Math.min(...nodes.map(node=>node.y)),maxX=Math.max(...nodes.map(node=>node.x+126)),maxY=Math.max(...nodes.map(node=>node.y+82)),worldX=minX+Math.max(0,Math.min(1,(event.clientX-rect.left)/rect.width))*(maxX-minX),worldY=minY+Math.max(0,Math.min(1,(event.clientY-rect.top)/rect.height))*(maxY-minY);graphPan={x:canvas.clientWidth/2-worldX*state.zoom,y:canvas.clientHeight/2-worldY*state.zoom};applyGraphTransform();};
+  const move=event=>{if(pan&&event.pointerId===pan.id){graphPan={x:pan.startX+event.clientX-pan.pointerX,y:pan.startY+event.clientY-pan.pointerY};applyGraphTransform();}else if(minimapDrag===event.pointerId)minimapMove(event);};
+  canvas.onpointerdown=event=>{if(![0,1].includes(event.button)||event.target.closest(".node,.zoom-controls,.minimap,.add-menu"))return;event.preventDefault();pan={id:event.pointerId,pointerX:event.clientX,pointerY:event.clientY,startX:graphPan.x,startY:graphPan.y};canvas.classList.add("panning");window.addEventListener("pointermove",move);window.addEventListener("pointerup",finish);window.addEventListener("pointercancel",finish);};
+  canvas.onwheel=event=>{event.preventDefault();if(event.ctrlKey||event.metaKey){const rect=canvas.getBoundingClientRect(),before=state.zoom,next=Math.max(.6,Math.min(1.4,before-event.deltaY*.0015)),worldX=(event.clientX-rect.left-graphPan.x)/before,worldY=(event.clientY-rect.top-graphPan.y)/before;state.zoom=next;graphPan={x:event.clientX-rect.left-worldX*next,y:event.clientY-rect.top-worldY*next};}else graphPan={x:graphPan.x-event.deltaX-(event.shiftKey?event.deltaY:0),y:graphPan.y-(event.shiftKey?0:event.deltaY)};applyGraphTransform();};
+  minimap.onpointerdown=event=>{if(event.button!==0)return;event.preventDefault();event.stopPropagation();minimapDrag=event.pointerId;minimapMove(event);window.addEventListener("pointermove",move);window.addEventListener("pointerup",finish);window.addEventListener("pointercancel",finish);};
+  minimap.onkeydown=event=>{if(!["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(event.key))return;event.preventDefault();graphPan.x+=(event.key==="ArrowLeft"?28:event.key==="ArrowRight"?-28:0);graphPan.y+=(event.key==="ArrowUp"?28:event.key==="ArrowDown"?-28:0);applyGraphTransform();};
 }
 
 function setupResizablePanels(){
@@ -377,7 +394,7 @@ function navigateTutorial(direction){const now=performance.now();if(!activeTutor
 
 function bindUI(){
   renderLibrary();renderGraph();renderInspector();initTimeline();
-  setupGraphDrop();setupResizablePanels();renderTutorialGallery();renderDemoGallery();
+  setupGraphDrop();setupGraphNavigation();setupResizablePanels();renderTutorialGallery();renderDemoGallery();
   window.addEventListener("werkkzeug-trigger",()=>lastExternalEvent=performance.now()/1000);globalThis.werkkzeugTrigger=()=>window.dispatchEvent(new Event("werkkzeug-trigger"));
   $("#nodeSearch").oninput=e=>renderLibrary(e.target.value);$("#projectName").oninput=autosave;
   $("#audioToggle").onclick=async()=>{const ctx=await ensureAudio();if(!ctx)return;state.audio.enabled=!state.audio.enabled;updateAudioUI();autosave();if(state.audio.enabled){ctx.resume().then(()=>{resetAudioClock();setAudioGain(state.playing?state.audio.volume:0);$("#audioToggle").dataset.context=ctx.state;});}else setAudioGain(0);};
@@ -387,7 +404,7 @@ function bindUI(){
   $("#loopBtn").onclick=e=>{state.looping=!state.looping;e.currentTarget.classList.toggle("active",state.looping)};$("#bpm").onchange=e=>{state.bpm=Number(e.target.value);resetAudioClock();autosave();};
   $("#enableNode").onclick=()=>{const n=allNodes().find(x=>x.id===state.selected);if(!n)return;n.enabled=!n.enabled;renderGraph();renderInspector();updateSceneOverlays();autosave()};$("#deleteNode").onclick=removeSelected;
   $("#addNodeBtn").onclick=e=>{const m=$("#addMenu");m.hidden=!m.hidden;m.style.top="7px";m.style.right="7px";m.innerHTML=operatorCatalog.flatMap(g=>g.items).map(i=>`<button data-kind="${i[0]}" ${i[4]?`data-opid="${i[4]}"`:""}><span class="op-icon ${i[2]}">${i[1]}</span>${i[0]}${i[3]?`<small>${i[3]}</small>`:""}</button>`).join("");$$('button',m).forEach(b=>b.onclick=()=>b.dataset.opid?addCompatibilityNode(operatorById.get(b.dataset.opid)):addNode(b.dataset.kind));};
-  $("#zoomIn").onclick=()=>setZoom(state.zoom+.1);$("#zoomOut").onclick=()=>setZoom(state.zoom-.1);$("#frameBtn").onclick=()=>setZoom(1);$("#fullscreenBtn").onclick=()=>$(".viewport").requestFullscreen?.();
+  $("#zoomIn").onclick=()=>setZoom(state.zoom+.1);$("#zoomOut").onclick=()=>setZoom(state.zoom-.1);$("#frameBtn").onclick=frameGraph;$("#fullscreenBtn").onclick=()=>$(".viewport").requestFullscreen?.();
   $("#gridBtn").onclick=e=>{e.currentTarget.classList.toggle("active");$("#graphCanvas").style.backgroundImage=e.currentTarget.classList.contains("active")?"":"none"};
   $$("#viewMode button").forEach(b=>b.onclick=()=>{$$("#viewMode button").forEach(x=>x.classList.remove("active"));b.classList.add("active");if(b.dataset.view==="camera")orbit={yaw:.15,pitch:.1,distance:4.5};});
   $$("#graphTabs button").forEach(b=>b.onclick=()=>{$$("#graphTabs button").forEach(x=>x.classList.remove("active"));b.classList.add("active");const label=b.textContent.trim();switchGraphMode(label==="TEXTURES"?"textures":label==="POST FX"?"post":label==="AUDIO"?"audio":"scene")});
@@ -395,10 +412,10 @@ function bindUI(){
   $("#tutorialsBtn").onclick=()=>$("#tutorialModal").hidden=false;$("#tutorialExit").onclick=exitTutorial;$("#tutorialPrev").onclick=()=>navigateTutorial(-1);$("#tutorialNext").onclick=()=>navigateTutorial(1);
   $("#demosBtn").onclick=()=>$("#demoModal").hidden=false;
   $("#actSelector").onchange=e=>selectAct(e.target.value);$("#prevAct").onclick=()=>selectAct(currentActIndex()-1);$("#nextAct").onclick=()=>selectAct(currentActIndex()+1);
-  window.onresize=drawWires;document.onkeydown=e=>{lastExternalEvent=performance.now()/1000;if(e.target.matches("input,select,textarea"))return;if(e.code==="Space"){e.preventDefault();togglePlay()}if(e.key.toLowerCase()==="m")$("#audioToggle").click();if(e.key==="Delete"||e.key==="Backspace"){e.preventDefault();removeSelected();}if(e.key==="[")selectAct(currentActIndex()-1);if(e.key==="]")selectAct(currentActIndex()+1);if(e.key.toLowerCase()==="f")setZoom(1);if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="s"){e.preventDefault();autosave()}};
+  window.onresize=()=>{applyGraphTransform();};document.onkeydown=e=>{lastExternalEvent=performance.now()/1000;if(e.target.matches("input,select,textarea"))return;if(e.code==="Space"){e.preventDefault();togglePlay()}if(e.key.toLowerCase()==="m")$("#audioToggle").click();if(e.key==="Delete"||e.key==="Backspace"){e.preventDefault();removeSelected();}if(e.key==="[")selectAct(currentActIndex()-1);if(e.key==="]")selectAct(currentActIndex()+1);if(e.key.toLowerCase()==="f")frameGraph();if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="s"){e.preventDefault();autosave()}};
   updateAudioUI();
 }
-function setZoom(z){state.zoom=Math.max(.6,Math.min(1.4,z));$("#nodes").style.transform=`scale(${state.zoom})`;$("#nodes").style.transformOrigin="0 0";$("#zoomLabel").textContent=Math.round(state.zoom*100)+"%";drawWires();}
+function setZoom(z){const canvas=$("#graphCanvas"),before=state.zoom,next=Math.max(.6,Math.min(1.4,z)),centerX=canvas.clientWidth/2,centerY=canvas.clientHeight/2,worldX=(centerX-graphPan.x)/before,worldY=(centerY-graphPan.y)/before;state.zoom=next;graphPan={x:centerX-worldX*next,y:centerY-worldY*next};applyGraphTransform();}
 
 window.scrollTo(0,0);
 const saved=localStorage.getItem("werkkzeug-project");if(saved){try{const s=JSON.parse(saved);if(s.sceneVersion===DEFAULT_SCENE_VERSION){const legacyNodes=(s.nodes||state.nodes).filter(n=>!n.type?.includes("POST FX")&&!n.type?.includes("AUDIO OPERATOR"));Object.assign(state,{nodes:legacyNodes,connections:s.connections||state.connections,textureNodes:s.textureNodes||state.textureNodes,textureConnections:s.textureConnections||state.textureConnections,postNodes:s.postNodes||state.postNodes,postConnections:s.postConnections||state.postConnections,audioNodes:s.audioNodes||state.audioNodes,audioConnections:s.audioConnections||state.audioConnections,params:{...state.params,...s.params},audio:{...state.audio,...s.audio},bpm:s.bpm||state.bpm,duration:s.duration||state.duration,showcase:s.showcase??state.showcase,sceneVersion:s.sceneVersion});state.audio.enabled=false;if(s.name)$("#projectName").value=s.name;}else localStorage.setItem(`werkkzeug-project-before-scene-${DEFAULT_SCENE_VERSION}`,saved);$("#bpm").value=state.bpm;}catch{}}
