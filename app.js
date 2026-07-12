@@ -80,6 +80,10 @@ function setCurrentConnections(connections){
   else if(state.graphMode==="audio")state.audioConnections=connections;
   else state.connections=connections;
 }
+function constrainGraphNodes(){
+  const canvas=$("#graphCanvas");if(!canvas)return;
+  $$(".node",canvas).forEach(element=>{const node=currentNodes().find(item=>item.id===element.dataset.id);if(!node)return;const maxX=Math.max(0,canvas.clientWidth/state.zoom-element.offsetWidth),maxY=Math.max(0,canvas.clientHeight/state.zoom-element.offsetHeight);node.x=Math.max(0,Math.min(maxX,node.x));node.y=Math.max(0,Math.min(maxY,node.y));element.style.left=`${node.x}px`;element.style.top=`${node.y}px`;});
+}
 function finishConnection(event){
   if(!connectingPort||event.pointerId!==connectingPort.pointerId)return;
   const source=connectingPort,target=event.type==="pointercancel"?null:document.elementFromPoint(event.clientX,event.clientY)?.closest(".port");
@@ -109,7 +113,7 @@ function renderGraph() {
     };
     $$(".port",el).forEach(port=>port.onpointerdown=event=>startConnection(event,el.dataset.id,port.classList.contains("out")?"out":"in"));
   });
-  requestAnimationFrame(drawWires);
+  requestAnimationFrame(()=>{constrainGraphNodes();drawWires();});
 }
 function drawWires() {
   const area=$("#graphCanvas").getBoundingClientRect();
@@ -308,7 +312,7 @@ function setupGraphDrop(){
 
 function setupResizablePanels(){
   const root=document.documentElement,defaults={library:216,inspector:250,timeline:166,viewport:null};let layout={...defaults};try{layout={...layout,...JSON.parse(localStorage.getItem("werkkzeug-layout")||"{}")};}catch{}
-  const apply=()=>{root.style.setProperty("--library-width",`${layout.library}px`);root.style.setProperty("--inspector-width",`${layout.inspector}px`);root.style.setProperty("--timeline-height",`${layout.timeline}px`);root.style.setProperty("--viewport-height",layout.viewport?`${layout.viewport}px`:"58%");requestAnimationFrame(drawWires);};
+  const apply=()=>{root.style.setProperty("--library-width",`${layout.library}px`);root.style.setProperty("--inspector-width",`${layout.inspector}px`);root.style.setProperty("--timeline-height",`${layout.timeline}px`);root.style.setProperty("--viewport-height",layout.viewport?`${layout.viewport}px`:"58%");requestAnimationFrame(()=>{constrainGraphNodes();drawWires();});};
   const bind=(selector,move)=>{const handle=$(selector);let active=false,pointerId=-1;const onMove=e=>{if(!active||e.pointerId!==pointerId)return;move(e);apply();};const finish=e=>{if(!active||(e.pointerId!==undefined&&e.pointerId!==pointerId))return;active=false;handle.classList.remove("active");document.body.classList.remove("resizing");window.removeEventListener("pointermove",onMove);window.removeEventListener("pointerup",finish);window.removeEventListener("pointercancel",finish);localStorage.setItem("werkkzeug-layout",JSON.stringify(layout));};handle.onpointerdown=e=>{e.preventDefault();active=true;pointerId=e.pointerId;handle.classList.add("active");document.body.classList.add("resizing");window.addEventListener("pointermove",onMove);window.addEventListener("pointerup",finish);window.addEventListener("pointercancel",finish);};handle.onlostpointercapture=finish;handle.ondblclick=()=>{layout={...defaults};apply();localStorage.removeItem("werkkzeug-layout");};};
   bind("#resizeLibrary",e=>layout.library=Math.max(150,Math.min(400,e.clientX)));
   bind("#resizeInspector",e=>layout.inspector=Math.max(200,Math.min(460,innerWidth-e.clientX)));
