@@ -69,7 +69,7 @@ This adapts the pixel-payload technique used by `demolishedcompressor` for PNG t
 - Beat-synchronized audio/visual transport, master volume and live spectrum meter
 - Per-property modulation sockets with Beat, Half-beat, Bar, Sine, Envelope,
   Noise, five-second Act events, and external/pointer Event sources
-- Draggable procedural operator graph and operator library
+- Draggable procedural operator graph with collision-aware gutters and a one-click **SPACE** layout tool
 - Reliable inspector/keyboard node deletion with automatic wire cleanup
 - Per-node `(i)` guides covering purpose, usage, inputs, outputs, and runtime status
 - Independent Scene, Textures, Post FX and Audio graph workspaces

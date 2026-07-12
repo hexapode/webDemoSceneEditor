@@ -57,12 +57,12 @@
           <div class="graph panel" id="graphPanel">
             <div class="graph-head">
               <div class="tabs" id="graphTabs"><button class="active" title="Scene and geometry graph">SCENE</button><button title="Procedural texture graph">TEXTURES</button><button title="Post-processing graph">POST FX</button><button title="WebAudio graph">AUDIO</button></div>
-              <div class="graph-tools"><button id="panToolBtn" class="pan-tool" type="button" aria-pressed="false" title="Pan tool · drag anywhere in the graph">✋ PAN</button><button id="frameBtn" title="Frame all">⌗</button><button id="addNodeBtn" class="add-node">＋ ADD OPERATOR</button></div>
+              <div class="graph-tools"><button id="panToolBtn" class="pan-tool" type="button" aria-pressed="false" title="Pan tool · drag anywhere in the graph">✋ PAN</button><button id="spaceNodesBtn" class="space-nodes" type="button" title="Add spacing between overlapping nodes">⇲ SPACE</button><button id="frameBtn" title="Frame all">⌗</button><button id="addNodeBtn" class="add-node">＋ ADD OPERATOR</button></div>
             </div>
             <div class="graph-canvas" id="graphCanvas">
               <svg id="wires" aria-hidden="true"></svg>
               <div id="nodes"></div>
-              <div class="graph-nav-hint">PAN TOOL: DRAG ANYWHERE · MIDDLE/RIGHT DRAG · WHEEL TO SLIDE</div>
+              <div class="graph-nav-hint">PAN: DRAG · SPACE: REMOVE OVERLAPS · WHEEL: SLIDE</div>
               <div class="minimap" id="minimap" role="button" tabindex="0" aria-label="Navigate node graph" title="Drag to navigate the node graph"><span></span></div>
               <div class="zoom-controls"><button id="zoomOut">−</button><span id="zoomLabel">100%</span><button id="zoomIn">＋</button></div>
               <div class="add-menu" id="addMenu" hidden></div>

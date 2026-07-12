@@ -49,6 +49,8 @@
 .minimap:focus-visible { outline:1px solid var(--orange); outline-offset:2px; }
 .graph-tools .pan-tool { width:auto; padding:0 7px; border:1px solid #30373c; color:#788188; font-size:7px; letter-spacing:.5px; }
 .graph-tools .pan-tool.active { border-color:#78422f; background:#2a1812; color:var(--orange); }
+.graph-tools .space-nodes { width:auto; padding:0 7px; border:1px solid #30373c; color:#788188; font-size:7px; letter-spacing:.5px; }
+.graph-tools .space-nodes:hover { border-color:#3d5a59; background:#10201f; color:var(--cyan); }
 .param-text { grid-column:2/4; min-width:0; height:25px; border:1px solid #2b3136; background:#0d1012; color:#d1d6d8; padding:0 7px; font-size:9px; }
 .native-runtime { margin:8px 9px; padding:7px 9px; border:1px solid #25372f; background:#0d1511; color:#629276; font-size:7px; letter-spacing:.7px; }
 .delete-node { margin-left:auto; padding:5px 6px; border:1px solid #412a2a; color:#b76565; font-size:6px; letter-spacing:.7px; }
