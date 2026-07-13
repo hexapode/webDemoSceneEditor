@@ -161,7 +161,7 @@ rainTextureSpecs.forEach(([label,kindA,kindB,accentColor,detailKind="Domain Warp
 
 const RAIN_ROOM_PROJECT={
   name:"RAIN ROOM · REALISTIC INTERIOR",duration:30,bpm:108,showcase:false,visualMode:"realisticRoom",selected:"ROOM_CAMERA",
-  params:{shapeMode:11,color:"#b35b32",accent:"#55745f",metallic:.18,roughness:.62,twist:.08,bloom:.24,vignette:.28,pulse:.18,scale:1,exposure:1.08,texScale:5.2,texSpeed:.38,texWarp:1.1,texContrast:1.45,texKaleido:4,texMix:.78,multiplyCount:8,multiplySpread:1,audioCutoff:940,audioDecay:.46,audioDelay:.3,audioDrive:.22,synthAttack:.72,synthRelease:2.4,synthDetune:.28,padLevel:.46,arpRate:2,arpOctaves:2,reverbMix:.34,chorusMix:.2,drumTone:.62,mixerGain:.72,showMix:0},audio:{volume:.34},
+  params:{shapeMode:11,color:"#b35b32",accent:"#55745f",metallic:.18,roughness:.62,twist:.08,bloom:.24,vignette:.05,pulse:.18,scale:1,exposure:1.08,texScale:5.2,texSpeed:.38,texWarp:1.1,texContrast:1.45,texKaleido:4,texMix:.78,multiplyCount:8,multiplySpread:1,audioCutoff:940,audioDecay:.46,audioDelay:.3,audioDrive:.22,synthAttack:.72,synthRelease:2.4,synthDetune:.28,padLevel:.46,arpRate:2,arpOctaves:2,reverbMix:.34,chorusMix:.2,drumTone:.62,mixerGain:.72,showMix:0},audio:{volume:.34},
   nodes:[
     {id:"ROOM_TITLE",name:"Room Captions",type:"TEXT OPERATOR",kind:"Text",x:20,y:12,color:"#b35b32",value:"4 ROOMS",enabled:true,params:{text:"I. RAIN LIVING ROOM",textColor:"#e8dfd2",textSize:18,textX:18,textY:14,textRotation:0,textWave:.02,sequenceStep:7.5,sequence:["I. RAIN LIVING ROOM","II. STONE KITCHEN","III. CREATIVE STUDIO","IV. LINEN BEDROOM"]}},
     {id:"ROOM_CLOCK",name:"Quiet Pulse",type:"SIGNAL OPERATOR",kind:"Sine",x:165,y:12,color:"#55d887",value:"108 BPM",enabled:true,bindings:{pulse:{source:"half",amount:.08}}},
@@ -203,7 +203,7 @@ const RAIN_ROOM_PROJECT={
     {id:"ROOM_P2",name:"Window Highlight Bloom",type:"POST FX OPERATOR",kind:"Bloom",x:175,y:32,color:"#f1b85b",value:"SUBTLE",enabled:true},
     {id:"ROOM_P3",name:"Warm Film Grade",type:"POST FX OPERATOR",kind:"Color Grade",x:325,y:72,color:"#b35b32",value:"PORTRA 400",enabled:true},
     {id:"ROOM_P4",name:"Fine Sensor Grain",type:"POST FX OPERATOR",kind:"Film Grain",x:475,y:32,color:"#9b7bff",value:"1.2%",enabled:true},
-    {id:"ROOM_P5",name:"Lens Vignette",type:"POST FX OPERATOR",kind:"Vignette",x:625,y:72,color:"#9b7bff",value:"0.28",enabled:true},
+    {id:"ROOM_P5",name:"Lens Vignette",type:"POST FX OPERATOR",kind:"Vignette",x:625,y:72,color:"#9b7bff",value:"0.05",enabled:true},
     {id:"ROOM_P6",name:"Final Interior",type:"RENDER OUTPUT",kind:"Output",x:775,y:42,color:"#55d887",value:"DISPLAY",enabled:true}
   ],postConnections:[["ROOM_P1","ROOM_P2"],["ROOM_P2","ROOM_P3"],["ROOM_P3","ROOM_P4"],["ROOM_P4","ROOM_P5"],["ROOM_P5","ROOM_P6"]],
   audioNodes:[
