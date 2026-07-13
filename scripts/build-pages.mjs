@@ -13,6 +13,7 @@ const runtimeFiles = [
   "operator-manifest.js",
   "compat-runtime.js",
   "city-shader.js",
+  "realistic-shader.js",
   "tutorials.js",
   "demos.js"
 ];

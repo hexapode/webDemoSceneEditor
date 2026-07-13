@@ -56,9 +56,9 @@ required.
 
 ## Executable demo export
 
-**Export Demo** creates one `project-name.jpg.html` file. The standalone WebGL/Web Audio player is gzip-compressed, encoded into high-contrast JPEG pixel blocks, and verified by decoding the lossy JPEG before download. A compact HTML unpacker lives in a valid JPEG APP marker, making the file simultaneously a JPEG container and an executable HTML demo.
+**Export Demo** creates one executable `project-name.html` file. The exporter first selects only the active visual shader, connected audio/spline features, used parameters, text, and reachable graph data. It minifies the generated GLSL/runtime, chooses the smaller of gzip and raw deflate, and embeds that compressed player in a tiny HTML inflater.
 
-This adapts the pixel-payload technique used by `demolishedcompressor` for PNG to JPEG. Eight-pixel blocks and threshold decoding are used because ordinary RGB-byte packing is not safe through lossy JPEG compression.
+JPEG packing inspired by `demolishedcompressor` remains available as an opt-in carrier. It is accepted only when it beats plain compressed HTML by at least 5% and 512 bytes; otherwise export skips canvas/JPEG encoding entirely.
 
 ## Included
 
@@ -75,13 +75,13 @@ This adapts the pixel-payload technique used by `demolishedcompressor` for PNG t
 - Independent Scene, Textures, Post FX and Audio graph workspaces
 - Resizable library, inspector, timeline and viewport/graph panels with persistent layout
 - Library-to-graph drag-and-drop plus zoom-correct node movement
-- Four complete guided projects, nine authored texture-building workshops (including realistic composition studies), and 409 isolated contextual sessions—one for every core node and WZ4 WebGL equivalent
+- Four complete guided projects, nine authored texture-building workshops (including realistic composition studies), and 417 isolated contextual sessions—one for every core node and WZ4 WebGL equivalent
 - Edge-to-edge UV texture preview without vignette attenuation, suitable for spotting scale, repetition, seams, and corner imbalance
 - Eight built-in audiovisual showcase demos, including Void Bloom and the graph-driven Night Transit city whose connected building, road, bridge, lighting, and camera nodes directly control its WebGL runtime
 - Context-sensitive parameter inspector
 - 12-second looping demo timeline with beat-synced animation
 - Local autosave with versioned project state
-- Single-file executable `.jpg.html` export with gzip-compressed JavaScript encoded in JPEG pixels
+- Tree-shaken single-file `.html` export with minified, compressed JavaScript and an optional size-gated JPEG carrier
 - Animated 2D fallback for browsers without an available GPU context
 
 Click **SOUND OFF** once to enable audio (browsers require a user gesture). Keyboard shortcuts: `Space` play/pause, `M` mute, `Delete` remove an operator, `F` frame the graph, and `Cmd/Ctrl+S` save locally.
