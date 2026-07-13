@@ -47,8 +47,52 @@ const VOID_BLOOM_PROJECT = {
   audioConnections:[["VBA_01","VBA_02"],["VBA_01","VBA_03"],["VBA_02","VBA_04"],["VBA_03","VBA_04"],["VBA_04","VBA_05"],["VBA_05","VBA_06"]]
 };
 
+const PROCEDURAL_CITY_PROJECT={
+  name:"NIGHT TRANSIT · PROCEDURAL CITY",duration:30,bpm:126,showcase:false,visualMode:"proceduralCity",selected:"CITY_CAMERA",
+  params:{shapeMode:3,color:"#ff2f8e",accent:"#42ecff",metallic:.82,roughness:.28,twist:.28,bloom:.58,vignette:.34,pulse:.56,scale:1,exposure:.86,texScale:6.4,texSpeed:.62,texWarp:1.75,texContrast:2.2,texKaleido:7,texMix:.72,multiplyCount:12,multiplySpread:1.4,audioCutoff:1380,audioDecay:.3,audioDelay:.38,audioDrive:.68,showMix:0},audio:{volume:.44},
+  nodes:[
+    {id:"CITY_TITLE",name:"District Titles",type:"TEXT OPERATOR",kind:"Text",x:20,y:8,color:"#ff2f8e",value:"5 DISTRICTS",enabled:true,params:{text:"I. ARRIVAL GATE",textColor:"#fff2e6",textSize:38,textX:50,textY:17,textRotation:0,textWave:.08,sequenceStep:6,sequence:["I. ARRIVAL GATE","II. NEON BLOCKS","III. DATA CANYON","IV. SKYBRIDGE CORE","V. DAWN EXIT"]}},
+    {id:"CITY_TAG",name:"Travel Log",type:"TEXT OPERATOR",kind:"Text",x:20,y:102,color:"#42ecff",value:"NARRATION",enabled:true,params:{text:"THE ROAD GENERATED ITSELF",textColor:"#42ecff",textSize:11,textX:50,textY:88,textRotation:0,textWave:.05,sequenceStep:6,sequence:["THE ROAD GENERATED ITSELF","EVERY WINDOW DREAMED IN COLOR","THE BUILDINGS LEARNED OUR SPEED","WE CROSSED THE MACHINE'S HEART","MORNING COMPILED ON THE HORIZON"]}},
+    {id:"CITY_CLOCK",name:"Transit Clock",type:"SIGNAL OPERATOR",kind:"Beat",x:165,y:8,color:"#55d887",value:"126 BPM",enabled:true,bindings:{pulse:{source:"beat",amount:.2}}},
+    {id:"CITY_BLOCK",name:"Building Seed",type:"GEOMETRY OPERATOR",kind:"Primitive",runtimeRole:"cityBuildings",x:310,y:8,color:"#5da7ff",value:"SDF BLOCK",enabled:true},
+    {id:"CITY_REPEAT",name:"Infinite Blocks",type:"GEOMETRY OPERATOR",kind:"Grid Array",runtimeRole:"cityRepeat",x:455,y:8,color:"#25c9cd",value:"INFINITE Z",enabled:true,bindings:{twist:{source:"bar",amount:.06}}},
+    {id:"CITY_HEIGHT",name:"Seeded Skyline",type:"GEOMETRY OPERATOR",kind:"Fractal",runtimeRole:"cityHeight",x:600,y:8,color:"#9b7bff",value:"HASH HEIGHT",enabled:true,bindings:{texScale:{source:"bar",amount:.08}}},
+    {id:"CITY_ROAD",name:"Procedural Road",type:"GEOMETRY OPERATOR",kind:"Grid Array",runtimeRole:"cityRoad",x:745,y:8,color:"#5da7ff",value:"LANES",enabled:true},
+    {id:"CITY_LIGHT",name:"Window Emission",type:"MATERIAL OPERATOR",kind:"Emission",runtimeRole:"cityLights",x:165,y:102,color:"#ff2f8e",value:"BEAT WINDOWS",enabled:true,bindings:{bloom:{source:"beat",amount:.14},pulse:{source:"envelope",amount:.18}}},
+    {id:"CITY_BRIDGE",name:"District Bridges",type:"GEOMETRY OPERATOR",kind:"Multiply",runtimeRole:"cityBridges",x:310,y:102,color:"#9b7bff",value:"SKY LINKS",enabled:true},
+    {id:"CITY_CAMERA",name:"Forward Travel",type:"SCENE OPERATOR",kind:"Camera",runtimeRole:"cityCamera",x:455,y:102,color:"#f1b85b",value:"30 SEC PATH",enabled:true,bindings:{cameraPitch:{source:"bar",amount:.06}}},
+    {id:"CITY_OUT",name:"Transit Output",type:"OUTPUT OPERATOR",kind:"Output",runtimeRole:"cityOutput",x:745,y:102,color:"#ff5a36",value:"00:30 LOOP",enabled:true}
+  ],
+  connections:[["CITY_TITLE","CITY_OUT"],["CITY_TAG","CITY_OUT"],["CITY_CLOCK","CITY_LIGHT"],["CITY_BLOCK","CITY_REPEAT"],["CITY_REPEAT","CITY_HEIGHT"],["CITY_HEIGHT","CITY_LIGHT"],["CITY_HEIGHT","CITY_BRIDGE"],["CITY_LIGHT","CITY_OUT"],["CITY_BRIDGE","CITY_OUT"],["CITY_ROAD","CITY_OUT"],["CITY_CAMERA","CITY_OUT"]],
+  textureNodes:[
+    {id:"CITY_T1",name:"Animated Noise · Asphalt",type:"NATIVE TEXTURE GENERATOR",kind:"Animated Noise",runtimeRole:"cityAsphaltTexture",x:25,y:34,color:"#25c9cd",value:"3 OCTAVES",enabled:true},
+    {id:"CITY_T2",name:"Animated Noise · Facade",type:"NATIVE TEXTURE GENERATOR",kind:"Animated Noise",runtimeRole:"cityFacadeTexture",x:170,y:74,color:"#25c9cd",value:"FINE FBM",enabled:true,bindings:{texScale:{source:"bar",amount:.08}}},
+    {id:"CITY_T3",name:"Domain Warp · Grime",type:"NATIVE TEXTURE MODIFIER",kind:"Domain Warp",runtimeRole:"cityGrimeTexture",x:315,y:38,color:"#5da7ff",value:"MULTISCALE",enabled:true,bindings:{texWarp:{source:"sine",amount:.1}}},
+    {id:"CITY_T4",name:"Kaleidoscope · Windows",type:"NATIVE TEXTURE MODIFIER",kind:"Kaleidoscope",runtimeRole:"cityWindowMask",x:460,y:72,color:"#9b7bff",value:"FLOORS / BAYS",enabled:true},
+    {id:"CITY_T5",name:"Palette Map · District",type:"NATIVE TEXTURE COLOR",kind:"Palette Map",runtimeRole:"cityPaletteTexture",x:605,y:36,color:"#ff2f8e",value:"5 GRADES",enabled:true,bindings:{texMix:{source:"beat",amount:.06}}},
+    {id:"CITY_T6",name:"Texture Output · Facade",type:"NATIVE TEXTURE OUTPUT",kind:"Texture Output",runtimeRole:"cityTextureOutput",x:750,y:68,color:"#55d887",value:"PBR-LIKE",enabled:true}
+  ],textureConnections:[["CITY_T1","CITY_T3"],["CITY_T2","CITY_T3"],["CITY_T3","CITY_T4"],["CITY_T4","CITY_T5"],["CITY_T5","CITY_T6"]],
+  postNodes:[
+    {id:"CITY_P1",name:"City Input",type:"RENDER INPUT",kind:"Scene Input",x:25,y:58,color:"#5da7ff",value:"HDR",enabled:true},
+    {id:"CITY_P2",name:"Velocity Split",type:"POST FX OPERATOR",kind:"Chromatic",x:175,y:34,color:"#9b7bff",value:"MOTION",enabled:true},
+    {id:"CITY_P3",name:"Neon Bloom",type:"POST FX OPERATOR",kind:"Bloom",x:325,y:66,color:"#ff2f8e",value:"WINDOW GLOW",enabled:true,bindings:{bloom:{source:"beat",amount:.16}}},
+    {id:"CITY_P4",name:"District Grade",type:"POST FX OPERATOR",kind:"Color Grade",x:475,y:34,color:"#f1b85b",value:"5 PALETTES",enabled:true},
+    {id:"CITY_P5",name:"Transit Grain",type:"POST FX OPERATOR",kind:"Film Grain",x:625,y:66,color:"#9b7bff",value:"NIGHT FILM",enabled:true},
+    {id:"CITY_P6",name:"Final Window",type:"RENDER OUTPUT",kind:"Output",x:775,y:42,color:"#55d887",value:"DISPLAY",enabled:true}
+  ],postConnections:[["CITY_P1","CITY_P2"],["CITY_P2","CITY_P3"],["CITY_P3","CITY_P4"],["CITY_P4","CITY_P5"],["CITY_P5","CITY_P6"]],
+  audioNodes:[
+    {id:"CITY_A1",name:"Motor Clock",type:"AUDIO CONTROL",kind:"Beat",x:25,y:58,color:"#55d887",value:"126 BPM",enabled:true},
+    {id:"CITY_A2",name:"Garage Drums",type:"AUDIO OPERATOR",kind:"Drum Machine",x:175,y:32,color:"#55d887",value:"NIGHT DRIVE",enabled:true,bindings:{audioDrive:{source:"bar",amount:.12}}},
+    {id:"CITY_A3",name:"Engine Bass",type:"AUDIO OPERATOR",kind:"Bass Synth",x:325,y:72,color:"#25c9cd",value:"C MINOR",enabled:true,bindings:{audioCutoff:{source:"envelope",amount:.38}}},
+    {id:"CITY_A4",name:"Tunnel Filter",type:"AUDIO OPERATOR",kind:"Lowpass",x:475,y:32,color:"#f1b85b",value:"1380 HZ",enabled:true,bindings:{audioCutoff:{source:"sine",amount:.16}}},
+    {id:"CITY_A5",name:"Street Echo",type:"AUDIO OPERATOR",kind:"Delay",x:625,y:72,color:"#9b7bff",value:"38%",enabled:true},
+    {id:"CITY_A6",name:"Transit Master",type:"AUDIO OUTPUT",kind:"Audio Output",x:775,y:42,color:"#ff2f8e",value:"-7 DB",enabled:true}
+  ],audioConnections:[["CITY_A1","CITY_A2"],["CITY_A1","CITY_A3"],["CITY_A2","CITY_A4"],["CITY_A3","CITY_A4"],["CITY_A4","CITY_A5"],["CITY_A5","CITY_A6"]]
+};
+
 export const BUILTIN_DEMOS = [
   {id:"void-bloom",title:"Void Bloom",tag:"FULL PROJECT",description:"A 24-second signal garden of recursive petals, molten interference and breathing WebAudio.",colors:["#ff6846","#6df7ff"],bpm:132,project:VOID_BLOOM_PROJECT,params:VOID_BLOOM_PROJECT.params},
+  {id:"procedural-city",title:"Night Transit",tag:"PROCEDURAL CITY",description:"A 30-second forward journey through five infinite generated districts, from neon night to compiled dawn.",colors:["#ff2f8e","#42ecff"],bpm:126,project:PROCEDURAL_CITY_PROJECT,params:PROCEDURAL_CITY_PROJECT.params},
   {id:"neon-cathedral",title:"Neon Cathedral",tag:"64K STUDY",description:"Iridescent orbital architecture with a warm cinematic bloom.",colors:["#ff583e","#20bed0"],bpm:128,params:{shapeMode:0,color:"#ff583e",accent:"#20bed0",twist:1.4,scale:1,roughness:.24,bloom:.72,vignette:.17,exposure:1.15,pulse:.34,texScale:3.8,texSpeed:.32,texWarp:1.15,texContrast:1.45,texKaleido:6,texMix:.72,audioCutoff:920,audioDecay:.32,audioDrive:.4}},
   {id:"crystal-reactor",title:"Crystal Reactor",tag:"PROCEDURAL",description:"A faceted energy core driven by sharp cyan and violet interference.",colors:["#62f5ff","#7851ff"],bpm:142,params:{shapeMode:1,color:"#62f5ff",accent:"#7851ff",twist:2.25,scale:.84,roughness:.08,bloom:1.05,vignette:.32,exposure:1.28,pulse:.7,texScale:7.2,texSpeed:.62,texWarp:2.1,texContrast:2.2,texKaleido:9,texMix:.9,audioCutoff:1450,audioDecay:.22,audioDrive:.76}},
   {id:"solar-organism",title:"Solar Organism",tag:"AUDIOVISUAL",description:"Soft metaball motion, molten gradients and a slow breathing bass clock.",colors:["#ffb52d","#ff315f"],bpm:96,params:{shapeMode:2,color:"#ffb52d",accent:"#ff315f",twist:.62,scale:1.15,roughness:.38,bloom:.88,vignette:.28,exposure:1.05,pulse:.92,texScale:2.6,texSpeed:.21,texWarp:2.65,texContrast:1.3,texKaleido:5,texMix:.82,audioCutoff:540,audioDecay:.58,audioDrive:.54}},

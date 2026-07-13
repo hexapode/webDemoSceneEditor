@@ -75,8 +75,9 @@ This adapts the pixel-payload technique used by `demolishedcompressor` for PNG t
 - Independent Scene, Textures, Post FX and Audio graph workspaces
 - Resizable library, inspector, timeline and viewport/graph panels with persistent layout
 - Library-to-graph drag-and-drop plus zoom-correct node movement
-- Four prebuilt tutorial projects with guided, workspace-aware walkthroughs
-- Seven built-in audiovisual showcase demos, including the full-graph Void Bloom project
+- Four complete guided projects, nine authored texture-building workshops (including realistic composition studies), and 409 isolated contextual sessions—one for every core node and WZ4 WebGL equivalent
+- Edge-to-edge UV texture preview without vignette attenuation, suitable for spotting scale, repetition, seams, and corner imbalance
+- Eight built-in audiovisual showcase demos, including Void Bloom and the graph-driven Night Transit city whose connected building, road, bridge, lighting, and camera nodes directly control its WebGL runtime
 - Context-sensitive parameter inspector
 - 12-second looping demo timeline with beat-synced animation
 - Local autosave with versioned project state
@@ -94,7 +95,7 @@ can trigger it with `window.werkkzeugTrigger()` or by dispatching a
 
 See [COMPATIBILITY.md](COMPATIBILITY.md) for the audited coverage matrix and precise compatibility-level definitions.
 
-`operator-manifest.js` is generated from the 374 operator declarations in Farbrausch's public `altona_wz4` source tree. All original operators are searchable, instantiable, connectable, serializable and exportable. The inspector explicitly distinguishes schema-compatible nodes from browser-native implementations; registering an original DirectX/C++ operator does not falsely imply that its runtime has already been ported to WebGL.
+`operator-manifest.js` is generated from the 374 operator declarations in Farbrausch's public `altona_wz4` source tree. All original operators are searchable, instantiable, connectable, serializable and exportable. Each declaration receives a deterministic family-specific WebGL equivalent with four animatable controls. The editor labels these as browser substitutes rather than claiming instruction-identical parity with the original DirectX/C++ implementation.
 
 Regenerate the catalog against a local copy of `altona_wz4`:
 

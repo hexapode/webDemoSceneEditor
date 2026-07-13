@@ -11,6 +11,8 @@ const runtimeFiles = [
   "app.js",
   "exporter.js",
   "operator-manifest.js",
+  "compat-runtime.js",
+  "city-shader.js",
   "tutorials.js",
   "demos.js"
 ];
