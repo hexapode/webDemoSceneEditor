@@ -56,7 +56,7 @@ required.
 
 ## Executable demo export
 
-**Export Demo** creates one executable `project-name.html` file. The exporter first selects only the active visual shader, connected audio/spline features, used parameters, text, and reachable graph data. It minifies the generated GLSL/runtime, chooses the smaller of gzip and raw deflate, and embeds that compressed player in a tiny HTML inflater.
+**Export Demo** creates one executable `project-name.html` file. Every project uses the same primitive renderer; the exporter retains only connected audio/spline features, used parameters, text, and reachable graph data. It minifies the shared GLSL/runtime, chooses the smaller of gzip and raw deflate, and embeds that compressed player in a tiny HTML inflater.
 
 JPEG packing inspired by `demolishedcompressor` remains available as an opt-in carrier. It is accepted only when it beats plain compressed HTML by at least 5% and 512 bytes; otherwise export skips canvas/JPEG encoding entirely.
 
@@ -77,7 +77,7 @@ JPEG packing inspired by `demolishedcompressor` remains available as an opt-in c
 - Library-to-graph drag-and-drop plus zoom-correct node movement
 - Four complete guided projects, nine authored texture-building workshops (including realistic composition studies), and 417 isolated contextual sessions—one for every core node and WZ4 WebGL equivalent
 - Edge-to-edge UV texture preview without vignette attenuation, suitable for spotting scale, repetition, seams, and corner imbalance
-- Eight built-in audiovisual showcase demos, including Void Bloom and the graph-driven Night Transit city whose connected building, road, bridge, lighting, and camera nodes directly control its WebGL runtime
+- Eight built-in audiovisual showcase demos assembled from the same native primitive, composition, material, camera, texture, post-FX, and audio operators available in the editor
 - Context-sensitive parameter inspector
 - 12-second looping demo timeline with beat-synced animation
 - Local autosave with versioned project state

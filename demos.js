@@ -1,5 +1,5 @@
 const VOID_BLOOM_PROJECT = {
-  name:"VOID BLOOM · A SIGNAL GARDEN",duration:24,bpm:132,showcase:false,visualMode:"voidBloom",selected:"VB_MATERIAL",
+  name:"VOID BLOOM · A SIGNAL GARDEN",duration:24,bpm:132,showcase:false,visualMode:"default",selected:"VB_MATERIAL",
   params:{shapeMode:2,color:"#ff6846",accent:"#6df7ff",metallic:.94,roughness:.09,twist:1.92,bloom:1.12,vignette:.36,pulse:.88,scale:.92,exposure:1.16,texScale:6.6,texSpeed:.74,texWarp:2.35,texContrast:2.25,texKaleido:11,texMix:.92,multiplyCount:12,multiplySpread:1.35,audioCutoff:1150,audioDecay:.36,audioDelay:.42,audioDrive:.78,showMix:0},
   audio:{volume:.46},
   nodes:[
@@ -48,29 +48,29 @@ const VOID_BLOOM_PROJECT = {
 };
 
 const PROCEDURAL_CITY_PROJECT={
-  name:"NIGHT TRANSIT · PROCEDURAL CITY",duration:30,bpm:126,showcase:false,visualMode:"proceduralCity",selected:"CITY_CAMERA",
+  name:"NIGHT TRANSIT · PROCEDURAL CITY",duration:30,bpm:126,showcase:false,visualMode:"default",selected:"CITY_CAMERA",
   params:{shapeMode:3,color:"#ff2f8e",accent:"#42ecff",metallic:.82,roughness:.28,twist:.28,bloom:.58,vignette:.34,pulse:.56,scale:1,exposure:.86,texScale:6.4,texSpeed:.62,texWarp:1.75,texContrast:2.2,texKaleido:7,texMix:.72,multiplyCount:12,multiplySpread:1.4,audioCutoff:1380,audioDecay:.3,audioDelay:.38,audioDrive:.68,showMix:0},audio:{volume:.44},
   nodes:[
     {id:"CITY_TITLE",name:"District Titles",type:"TEXT OPERATOR",kind:"Text",x:20,y:8,color:"#ff2f8e",value:"5 DISTRICTS",enabled:true,params:{text:"I. ARRIVAL GATE",textColor:"#fff2e6",textSize:38,textX:50,textY:17,textRotation:0,textWave:.08,sequenceStep:6,sequence:["I. ARRIVAL GATE","II. NEON BLOCKS","III. DATA CANYON","IV. SKYBRIDGE CORE","V. DAWN EXIT"]}},
     {id:"CITY_TAG",name:"Travel Log",type:"TEXT OPERATOR",kind:"Text",x:20,y:102,color:"#42ecff",value:"NARRATION",enabled:true,params:{text:"THE ROAD GENERATED ITSELF",textColor:"#42ecff",textSize:11,textX:50,textY:88,textRotation:0,textWave:.05,sequenceStep:6,sequence:["THE ROAD GENERATED ITSELF","EVERY WINDOW DREAMED IN COLOR","THE BUILDINGS LEARNED OUR SPEED","WE CROSSED THE MACHINE'S HEART","MORNING COMPILED ON THE HORIZON"]}},
     {id:"CITY_CLOCK",name:"Transit Clock",type:"SIGNAL OPERATOR",kind:"Beat",x:165,y:8,color:"#55d887",value:"126 BPM",enabled:true,bindings:{pulse:{source:"beat",amount:.2}}},
-    {id:"CITY_BLOCK",name:"Building Seed",type:"GEOMETRY OPERATOR",kind:"Primitive",runtimeRole:"cityBuildings",x:310,y:8,color:"#5da7ff",value:"SDF BLOCK",enabled:true},
-    {id:"CITY_REPEAT",name:"Infinite Blocks",type:"GEOMETRY OPERATOR",kind:"Grid Array",runtimeRole:"cityRepeat",x:455,y:8,color:"#25c9cd",value:"INFINITE Z",enabled:true,bindings:{twist:{source:"bar",amount:.06}}},
-    {id:"CITY_HEIGHT",name:"Seeded Skyline",type:"GEOMETRY OPERATOR",kind:"Fractal",runtimeRole:"cityHeight",x:600,y:8,color:"#9b7bff",value:"HASH HEIGHT",enabled:true,bindings:{texScale:{source:"bar",amount:.08}}},
-    {id:"CITY_ROAD",name:"Procedural Road",type:"GEOMETRY OPERATOR",kind:"Grid Array",runtimeRole:"cityRoad",x:745,y:8,color:"#5da7ff",value:"LANES",enabled:true},
-    {id:"CITY_LIGHT",name:"Window Emission",type:"MATERIAL OPERATOR",kind:"Emission",runtimeRole:"cityLights",x:165,y:102,color:"#ff2f8e",value:"BEAT WINDOWS",enabled:true,bindings:{bloom:{source:"beat",amount:.14},pulse:{source:"envelope",amount:.18}}},
-    {id:"CITY_BRIDGE",name:"District Bridges",type:"GEOMETRY OPERATOR",kind:"Multiply",runtimeRole:"cityBridges",x:310,y:102,color:"#9b7bff",value:"SKY LINKS",enabled:true},
-    {id:"CITY_CAMERA",name:"Forward Travel",type:"SCENE OPERATOR",kind:"Camera",runtimeRole:"cityCamera",x:455,y:102,color:"#f1b85b",value:"30 SEC PATH",enabled:true,bindings:{cameraPitch:{source:"bar",amount:.06}}},
-    {id:"CITY_OUT",name:"Transit Output",type:"OUTPUT OPERATOR",kind:"Output",runtimeRole:"cityOutput",x:745,y:102,color:"#ff5a36",value:"00:30 LOOP",enabled:true}
+    {id:"CITY_BLOCK",name:"Building Seed",type:"GEOMETRY OPERATOR",kind:"Primitive",x:310,y:8,color:"#5da7ff",value:"SDF BLOCK",enabled:true},
+    {id:"CITY_REPEAT",name:"Infinite Blocks",type:"GEOMETRY OPERATOR",kind:"Grid Array",x:455,y:8,color:"#25c9cd",value:"INFINITE Z",enabled:true,bindings:{twist:{source:"bar",amount:.06}}},
+    {id:"CITY_HEIGHT",name:"Seeded Skyline",type:"GEOMETRY OPERATOR",kind:"Fractal",x:600,y:8,color:"#9b7bff",value:"HASH HEIGHT",enabled:true,bindings:{texScale:{source:"bar",amount:.08}}},
+    {id:"CITY_ROAD",name:"Procedural Road",type:"GEOMETRY OPERATOR",kind:"Grid Array",x:745,y:8,color:"#5da7ff",value:"LANES",enabled:true},
+    {id:"CITY_LIGHT",name:"Window Emission",type:"MATERIAL OPERATOR",kind:"Emission",x:165,y:102,color:"#ff2f8e",value:"BEAT WINDOWS",enabled:true,bindings:{bloom:{source:"beat",amount:.14},pulse:{source:"envelope",amount:.18}}},
+    {id:"CITY_BRIDGE",name:"District Bridges",type:"GEOMETRY OPERATOR",kind:"Multiply",x:310,y:102,color:"#9b7bff",value:"SKY LINKS",enabled:true},
+    {id:"CITY_CAMERA",name:"Forward Travel",type:"SCENE OPERATOR",kind:"Camera",x:455,y:102,color:"#f1b85b",value:"30 SEC PATH",enabled:true,bindings:{cameraPitch:{source:"bar",amount:.06}}},
+    {id:"CITY_OUT",name:"Transit Output",type:"OUTPUT OPERATOR",kind:"Output",x:745,y:102,color:"#ff5a36",value:"00:30 LOOP",enabled:true}
   ],
   connections:[["CITY_TITLE","CITY_OUT"],["CITY_TAG","CITY_OUT"],["CITY_CLOCK","CITY_LIGHT"],["CITY_BLOCK","CITY_REPEAT"],["CITY_REPEAT","CITY_HEIGHT"],["CITY_HEIGHT","CITY_LIGHT"],["CITY_HEIGHT","CITY_BRIDGE"],["CITY_LIGHT","CITY_OUT"],["CITY_BRIDGE","CITY_OUT"],["CITY_ROAD","CITY_OUT"],["CITY_CAMERA","CITY_OUT"]],
   textureNodes:[
-    {id:"CITY_T1",name:"Animated Noise · Asphalt",type:"NATIVE TEXTURE GENERATOR",kind:"Animated Noise",runtimeRole:"cityAsphaltTexture",x:25,y:34,color:"#25c9cd",value:"3 OCTAVES",enabled:true},
-    {id:"CITY_T2",name:"Animated Noise · Facade",type:"NATIVE TEXTURE GENERATOR",kind:"Animated Noise",runtimeRole:"cityFacadeTexture",x:170,y:74,color:"#25c9cd",value:"FINE FBM",enabled:true,bindings:{texScale:{source:"bar",amount:.08}}},
-    {id:"CITY_T3",name:"Domain Warp · Grime",type:"NATIVE TEXTURE MODIFIER",kind:"Domain Warp",runtimeRole:"cityGrimeTexture",x:315,y:38,color:"#5da7ff",value:"MULTISCALE",enabled:true,bindings:{texWarp:{source:"sine",amount:.1}}},
-    {id:"CITY_T4",name:"Kaleidoscope · Windows",type:"NATIVE TEXTURE MODIFIER",kind:"Kaleidoscope",runtimeRole:"cityWindowMask",x:460,y:72,color:"#9b7bff",value:"FLOORS / BAYS",enabled:true},
-    {id:"CITY_T5",name:"Palette Map · District",type:"NATIVE TEXTURE COLOR",kind:"Palette Map",runtimeRole:"cityPaletteTexture",x:605,y:36,color:"#ff2f8e",value:"5 GRADES",enabled:true,bindings:{texMix:{source:"beat",amount:.06}}},
-    {id:"CITY_T6",name:"Texture Output · Facade",type:"NATIVE TEXTURE OUTPUT",kind:"Texture Output",runtimeRole:"cityTextureOutput",x:750,y:68,color:"#55d887",value:"PBR-LIKE",enabled:true}
+    {id:"CITY_T1",name:"Animated Noise · Asphalt",type:"NATIVE TEXTURE GENERATOR",kind:"Animated Noise",x:25,y:34,color:"#25c9cd",value:"3 OCTAVES",enabled:true},
+    {id:"CITY_T2",name:"Animated Noise · Facade",type:"NATIVE TEXTURE GENERATOR",kind:"Animated Noise",x:170,y:74,color:"#25c9cd",value:"FINE FBM",enabled:true,bindings:{texScale:{source:"bar",amount:.08}}},
+    {id:"CITY_T3",name:"Domain Warp · Grime",type:"NATIVE TEXTURE MODIFIER",kind:"Domain Warp",x:315,y:38,color:"#5da7ff",value:"MULTISCALE",enabled:true,bindings:{texWarp:{source:"sine",amount:.1}}},
+    {id:"CITY_T4",name:"Kaleidoscope · Windows",type:"NATIVE TEXTURE MODIFIER",kind:"Kaleidoscope",x:460,y:72,color:"#9b7bff",value:"FLOORS / BAYS",enabled:true},
+    {id:"CITY_T5",name:"Palette Map · District",type:"NATIVE TEXTURE COLOR",kind:"Palette Map",x:605,y:36,color:"#ff2f8e",value:"5 GRADES",enabled:true,bindings:{texMix:{source:"beat",amount:.06}}},
+    {id:"CITY_T6",name:"Texture Output · Facade",type:"NATIVE TEXTURE OUTPUT",kind:"Texture Output",x:750,y:68,color:"#55d887",value:"PBR-LIKE",enabled:true}
   ],textureConnections:[["CITY_T1","CITY_T3"],["CITY_T2","CITY_T3"],["CITY_T3","CITY_T4"],["CITY_T4","CITY_T5"],["CITY_T5","CITY_T6"]],
   postNodes:[
     {id:"CITY_P1",name:"City Input",type:"RENDER INPUT",kind:"Scene Input",x:25,y:58,color:"#5da7ff",value:"HDR",enabled:true},
@@ -91,33 +91,33 @@ const PROCEDURAL_CITY_PROJECT={
 };
 
 const rainMeshSpecs=[
-  ["ROOM_SHELL","Architectural Shell","roomShell",[["Primitive","Outer House Box","BOX",14],["Boolean Subtract","Carve Shared Interior","HOUSE VOID"],["Boolean Union","Add Cross Partition Walls","2 × 2 ROOMS"],["Boolean Subtract","Cut Traversal Door Openings","4 OPEN DOORS"],["Bevel","Finish Door Reveals","HOUSE SHELL"]]],
-  ["ROOM_WINDOW","Rain Window Frame","roomWindow",[["Primitive","Window Bar Box","RECT PRISM",16],["Multiply","Repeat Mullions","3 BARS"],["Transform","Place Window Frame","BACK WALL"]]],
-  ["ROOM_SOFA","Linen Sectional","roomSofa",[["Primitive","Rounded Cushion","ROUNDED BOX",11],["Multiply","Repeat Sofa Modules","2 MODULES"],["Smooth Union","Fuse Sectional Cushions","LINEN SOFA"]]],
-  ["ROOM_RUG","Woven House Rugs","roomRug",[["Primitive","Thin Rug Plane","PLANE",15],["Multiply","Living + Bedroom Rugs","2 ROOMS"],["Transform","Place Floor Rugs","FLOOR"]]],
-  ["ROOM_SHELF","Library Shelves","roomShelves",[["Primitive","Shelf Board","RECT PRISM",16],["Multiply","Repeat Shelf Boards","4 SHELVES"],["Transform","Place Library Assembly","BACK WALL"]]],
-  ["ROOM_BOOKS","Library Books","roomBooks",[["Primitive","Book Block","BOX",14],["Multiply","Repeat Book Volumes","7 BOOKS"],["Transform","Vary Book Placement","LIBRARY"]]],
-  ["ROOM_CERAMIC","Thrown Ceramic","roomCeramic",[["Primitive","Ceramic Cylinder","CYLINDER",7],["Boolean Subtract","Hollow Vessel Interior","HOLLOW"],["Bevel","Round Ceramic Lip","VASE"]]],
-  ["ROOM_PLANT","Procedural Foliage","roomPlant",[["Primitive","Plant Stem Cylinder","CYLINDER",7],["Radial Repeat","Repeat Leaves","7 LEAVES"],["Smooth Union","Fuse Plant Mesh","POT + FOLIAGE"]]],
-  ["ROOM_KITCHEN","Kitchen Cabinet Run","roomKitchenCabinets",[["Primitive","Cabinet Box","BOX",14],["Grid Array","Repeat Cabinets","5 CABINETS"],["Transform","Place Cabinet Run","KITCHEN WALL"]]],
-  ["ROOM_ISLAND","Quartz Stone Island","roomIsland",[["Primitive","Island Base Box","BOX",14],["Boolean Union","Add Stone Worktop","QUARTZ TOP"],["Bevel","Bevel Island Edges","VEINED ISLAND"]]],
-  ["ROOM_SINK","Brushed Steel Sink","roomSink",[["Primitive","Sink Rounded Box","ROUNDED BOX",11],["Boolean Subtract","Carve Sink Basin","BASIN"],["Bevel","Round Steel Rim","STEEL SINK"]]],
-  ["ROOM_STOOLS","Walnut Stool Set","roomStools",[["Primitive","Stool Seat Disc","DISC",17],["Multiply","Repeat Stool Parts","3 STOOLS"],["Transform","Place Island Stools","COUNTER"]]],
-  ["ROOM_BED","Linen Bed Frame","roomBed",[["Primitive","Mattress Box","BOX",14],["Smooth Union","Fuse Base + Headboard","BED FRAME"],["Bevel","Soften Bed Edges","LINEN BED"]]],
-  ["ROOM_PILLOWS","Four Linen Pillows","roomPillows",[["Primitive","Rounded Pillow","ROUNDED BOX",11],["Multiply","Repeat Pillow Layers","4 PILLOWS"],["Transform","Place Pillow Stack","HEADBOARD"]]],
-  ["ROOM_NIGHTSTANDS","Walnut Nightstands","roomNightstands",[["Primitive","Nightstand Box","BOX",14],["Multiply","Mirror Nightstands","PAIR"],["Bevel","Bevel Walnut Blocks","BEDSIDE"]]],
-  ["ROOM_STUDIO","Studio Workbench","roomDesk",[["Primitive","Desk Top Rectangular Prism","RECT PRISM",16],["Multiply","Repeat Desk Legs","4 LEGS"],["Boolean Union","Fuse Desk Assembly","WORKBENCH"],["Bevel","Finish Desk Edges","STUDIO DESK"]]],
-  ["ROOM_MONITOR","Studio Display","roomMonitor",[["Primitive","Monitor Rectangular Prism","RECT PRISM",16],["Boolean Subtract","Inset Glass Screen","SCREEN"],["Bevel","Round Display Bezel","MONITOR"]]],
-  ["ROOM_CHAIR","Upholstered Chair","roomChair",[["Primitive","Chair Rounded Box","ROUNDED BOX",11],["Smooth Union","Fuse Seat + Back","CHAIR BODY"],["Transform","Place Studio Chair","STUDIO"]]],
-  ["ROOM_ART","Three Wall Studies","roomArt",[["Primitive","Art Panel Plane","PLANE",15],["Multiply","Repeat Framed Studies","TRIPTYCH"],["Transform","Place Wall Art","STUDIO WALL"]]],
-  ["ROOM_LIGHT","Warm Pendant Lights","roomPendant",[["Primitive","Pendant Cone Shade","CONE",8],["Boolean Union","Add Cylinder Cable","SHADE + CABLE"],["Multiply","Repeat Room Pendants","2700 K"]]],
-  ["ROOM_LIVING_DETAILS","Living Room Detail Set","roomLivingDetails",[["Primitive","Ellipsoid Throw Cushion","ELLIPSOID",19],["Multiply","Repeat Cushions + Side Objects","DETAIL COPIES"],["Boolean Union","Add Tube Lamp + Disc Table","PRIMITIVE ASSEMBLY"],["Bevel","Finish Living Details","LIVING DETAIL SET"]]],
-  ["ROOM_KITCHEN_DETAILS","Kitchen Detail Set","roomKitchenDetails",[["Primitive","Appliance Box","BOX",14],["Multiply","Repeat Fridge + Oven Volumes","APPLIANCE BLOCKS"],["Boolean Subtract","Cut Oven Glass + Door Seams","INSETS"],["Bevel","Finish Kitchen Details","KITCHEN DETAIL SET"]]],
-  ["ROOM_BEDROOM_DETAILS","Bedroom Detail Set","roomBedroomDetails",[["Primitive","Bench Rectangular Prism","RECT PRISM",16],["Multiply","Repeat Bench + Wardrobe Parts","ROOM STORAGE"],["Boolean Union","Add Cylinder Legs + Tube Lamp","PRIMITIVE ASSEMBLY"],["Bevel","Finish Bedroom Details","BEDROOM DETAIL SET"]]],
-  ["ROOM_STUDIO_DETAILS","Studio Detail Set","roomStudioDetails",[["Primitive","Speaker Box","BOX",14],["Multiply","Repeat Speakers + Keyboard Keys","STUDIO PARTS"],["Boolean Union","Add Disc Drivers + Tube Lamp","PRIMITIVE ASSEMBLY"],["Bevel","Finish Studio Details","STUDIO DETAIL SET"]]]
+  ["ROOM_SHELL","Architectural Shell",[["Primitive","Outer House Box","BOX",14],["Boolean Subtract","Carve Shared Interior","HOUSE VOID"],["Boolean Union","Add Cross Partition Walls","2 × 2 ROOMS"],["Boolean Subtract","Cut Traversal Door Openings","4 OPEN DOORS"],["Bevel","Finish Door Reveals","HOUSE SHELL"]]],
+  ["ROOM_WINDOW","Rain Window Frame",[["Primitive","Window Bar Box","RECT PRISM",16],["Multiply","Repeat Mullions","3 BARS"],["Transform","Place Window Frame","BACK WALL"]]],
+  ["ROOM_SOFA","Linen Sectional",[["Primitive","Rounded Cushion","ROUNDED BOX",11],["Multiply","Repeat Sofa Modules","2 MODULES"],["Smooth Union","Fuse Sectional Cushions","LINEN SOFA"]]],
+  ["ROOM_RUG","Woven House Rugs",[["Primitive","Thin Rug Plane","PLANE",15],["Multiply","Living + Bedroom Rugs","2 ROOMS"],["Transform","Place Floor Rugs","FLOOR"]]],
+  ["ROOM_SHELF","Library Shelves",[["Primitive","Shelf Board","RECT PRISM",16],["Multiply","Repeat Shelf Boards","4 SHELVES"],["Transform","Place Library Assembly","BACK WALL"]]],
+  ["ROOM_BOOKS","Library Books",[["Primitive","Book Block","BOX",14],["Multiply","Repeat Book Volumes","7 BOOKS"],["Transform","Vary Book Placement","LIBRARY"]]],
+  ["ROOM_CERAMIC","Thrown Ceramic",[["Primitive","Ceramic Cylinder","CYLINDER",7],["Boolean Subtract","Hollow Vessel Interior","HOLLOW"],["Bevel","Round Ceramic Lip","VASE"]]],
+  ["ROOM_PLANT","Procedural Foliage",[["Primitive","Plant Stem Cylinder","CYLINDER",7],["Radial Repeat","Repeat Leaves","7 LEAVES"],["Smooth Union","Fuse Plant Mesh","POT + FOLIAGE"]]],
+  ["ROOM_KITCHEN","Kitchen Cabinet Run",[["Primitive","Cabinet Box","BOX",14],["Grid Array","Repeat Cabinets","5 CABINETS"],["Transform","Place Cabinet Run","KITCHEN WALL"]]],
+  ["ROOM_ISLAND","Quartz Stone Island",[["Primitive","Island Base Box","BOX",14],["Boolean Union","Add Stone Worktop","QUARTZ TOP"],["Bevel","Bevel Island Edges","VEINED ISLAND"]]],
+  ["ROOM_SINK","Brushed Steel Sink",[["Primitive","Sink Rounded Box","ROUNDED BOX",11],["Boolean Subtract","Carve Sink Basin","BASIN"],["Bevel","Round Steel Rim","STEEL SINK"]]],
+  ["ROOM_STOOLS","Walnut Stool Set",[["Primitive","Stool Seat Disc","DISC",17],["Multiply","Repeat Stool Parts","3 STOOLS"],["Transform","Place Island Stools","COUNTER"]]],
+  ["ROOM_BED","Linen Bed Frame",[["Primitive","Mattress Box","BOX",14],["Smooth Union","Fuse Base + Headboard","BED FRAME"],["Bevel","Soften Bed Edges","LINEN BED"]]],
+  ["ROOM_PILLOWS","Four Linen Pillows",[["Primitive","Rounded Pillow","ROUNDED BOX",11],["Multiply","Repeat Pillow Layers","4 PILLOWS"],["Transform","Place Pillow Stack","HEADBOARD"]]],
+  ["ROOM_NIGHTSTANDS","Walnut Nightstands",[["Primitive","Nightstand Box","BOX",14],["Multiply","Mirror Nightstands","PAIR"],["Bevel","Bevel Walnut Blocks","BEDSIDE"]]],
+  ["ROOM_STUDIO","Studio Workbench",[["Primitive","Desk Top Rectangular Prism","RECT PRISM",16],["Multiply","Repeat Desk Legs","4 LEGS"],["Boolean Union","Fuse Desk Assembly","WORKBENCH"],["Bevel","Finish Desk Edges","STUDIO DESK"]]],
+  ["ROOM_MONITOR","Studio Display",[["Primitive","Monitor Rectangular Prism","RECT PRISM",16],["Boolean Subtract","Inset Glass Screen","SCREEN"],["Bevel","Round Display Bezel","MONITOR"]]],
+  ["ROOM_CHAIR","Upholstered Chair",[["Primitive","Chair Rounded Box","ROUNDED BOX",11],["Smooth Union","Fuse Seat + Back","CHAIR BODY"],["Transform","Place Studio Chair","STUDIO"]]],
+  ["ROOM_ART","Three Wall Studies",[["Primitive","Art Panel Plane","PLANE",15],["Multiply","Repeat Framed Studies","TRIPTYCH"],["Transform","Place Wall Art","STUDIO WALL"]]],
+  ["ROOM_LIGHT","Warm Pendant Lights",[["Primitive","Pendant Cone Shade","CONE",8],["Boolean Union","Add Cylinder Cable","SHADE + CABLE"],["Multiply","Repeat Room Pendants","2700 K"]]],
+  ["ROOM_LIVING_DETAILS","Living Room Detail Set",[["Primitive","Ellipsoid Throw Cushion","ELLIPSOID",19],["Multiply","Repeat Cushions + Side Objects","DETAIL COPIES"],["Boolean Union","Add Tube Lamp + Disc Table","PRIMITIVE ASSEMBLY"],["Bevel","Finish Living Details","LIVING DETAIL SET"]]],
+  ["ROOM_KITCHEN_DETAILS","Kitchen Detail Set",[["Primitive","Appliance Box","BOX",14],["Multiply","Repeat Fridge + Oven Volumes","APPLIANCE BLOCKS"],["Boolean Subtract","Cut Oven Glass + Door Seams","INSETS"],["Bevel","Finish Kitchen Details","KITCHEN DETAIL SET"]]],
+  ["ROOM_BEDROOM_DETAILS","Bedroom Detail Set",[["Primitive","Bench Rectangular Prism","RECT PRISM",16],["Multiply","Repeat Bench + Wardrobe Parts","ROOM STORAGE"],["Boolean Union","Add Cylinder Legs + Tube Lamp","PRIMITIVE ASSEMBLY"],["Bevel","Finish Bedroom Details","BEDROOM DETAIL SET"]]],
+  ["ROOM_STUDIO_DETAILS","Studio Detail Set",[["Primitive","Speaker Box","BOX",14],["Multiply","Repeat Speakers + Keyboard Keys","STUDIO PARTS"],["Boolean Union","Add Disc Drivers + Tube Lamp","PRIMITIVE ASSEMBLY"],["Bevel","Finish Studio Details","STUDIO DETAIL SET"]]]
 ];
 const RAIN_MESH_NODES=[],RAIN_MESH_CONNECTIONS=[],RAIN_MESH_OUTPUTS=[];
-rainMeshSpecs.forEach(([finalId,label,role,stages],assemblyIndex)=>{let previous=null;stages.forEach(([kind,name,value,shape],stageIndex)=>{const last=stageIndex===stages.length-1,id=last?finalId:`${finalId}_S${stageIndex+1}`,node={id,name:`${label} · ${name}`,type:"GEOMETRY OPERATOR",kind,x:165+stageIndex*155,y:12+assemblyIndex*94,color:kind==="Primitive"?"#5da7ff":kind.includes("Union")||kind.includes("Subtract")?"#9b7bff":"#25c9cd",value,enabled:true,...(shape!==undefined?{params:{shapeMode:shape}}:{}),...(last?{runtimeRole:role}:{})};RAIN_MESH_NODES.push(node);if(previous)RAIN_MESH_CONNECTIONS.push([previous,id]);previous=id;});RAIN_MESH_OUTPUTS.push(finalId);});
+rainMeshSpecs.forEach(([finalId,label,stages],assemblyIndex)=>{let previous=null;stages.forEach(([kind,name,value,shape],stageIndex)=>{const last=stageIndex===stages.length-1,id=last?finalId:`${finalId}_S${stageIndex+1}`,node={id,name:`${label} · ${name}`,type:"GEOMETRY OPERATOR",kind,x:165+stageIndex*155,y:12+assemblyIndex*94,color:kind==="Primitive"?"#5da7ff":kind.includes("Union")||kind.includes("Subtract")?"#9b7bff":"#25c9cd",value,enabled:true,...(shape!==undefined?{params:{shapeMode:shape}}:{})};RAIN_MESH_NODES.push(node);if(previous)RAIN_MESH_CONNECTIONS.push([previous,id]);previous=id;});RAIN_MESH_OUTPUTS.push(finalId);});
 RAIN_MESH_NODES.push(
   {id:"ROOM_TABLE_LEG",name:"Walnut Table · Cylinder Leg",type:"GEOMETRY OPERATOR",kind:"Primitive",x:165,y:1900,color:"#5da7ff",value:"CYLINDER",enabled:true,params:{shapeMode:7}},
   {id:"ROOM_TABLE_LEG_X",name:"Walnut Table · Scale + Translate Leg",type:"GEOMETRY OPERATOR",kind:"Transform",x:320,y:1900,color:"#25c9cd",value:"NARROW / DOWN",enabled:true},
@@ -128,7 +128,7 @@ RAIN_MESH_NODES.push(
   {id:"ROOM_TABLE_APRON_X",name:"Walnut Table · Scale Apron Rails",type:"GEOMETRY OPERATOR",kind:"Transform",x:320,y:2088,color:"#25c9cd",value:"LONG / NARROW",enabled:true},
   {id:"ROOM_TABLE_APRONS",name:"Walnut Table · Four Apron Rails",type:"GEOMETRY OPERATOR",kind:"Multiply",x:475,y:2088,color:"#25c9cd",value:"4 RAILS",enabled:true},
   {id:"ROOM_TABLE_FUSE",name:"Walnut Table · Fuse Top + Legs",type:"GEOMETRY OPERATOR",kind:"Boolean Union",x:630,y:1947,color:"#9b7bff",value:"MESH FUSION",enabled:true},
-  {id:"ROOM_TABLE",name:"Walnut Table · Final Bevel",type:"GEOMETRY OPERATOR",kind:"Bevel",runtimeRole:"roomTable",x:785,y:1947,color:"#f1b85b",value:"FINAL TABLE",enabled:true}
+  {id:"ROOM_TABLE",name:"Walnut Table · Final Bevel",type:"GEOMETRY OPERATOR",kind:"Bevel",x:785,y:1947,color:"#f1b85b",value:"FINAL TABLE",enabled:true}
 );
 RAIN_MESH_CONNECTIONS.push(["ROOM_TABLE_LEG","ROOM_TABLE_LEG_X"],["ROOM_TABLE_LEG_X","ROOM_TABLE_LEGS"],["ROOM_TABLE_LEGS","ROOM_TABLE_FUSE"],["ROOM_TABLE_TOP","ROOM_TABLE_TOP_X"],["ROOM_TABLE_TOP_X","ROOM_TABLE_FUSE"],["ROOM_TABLE_APRON","ROOM_TABLE_APRON_X"],["ROOM_TABLE_APRON_X","ROOM_TABLE_APRONS"],["ROOM_TABLE_APRONS","ROOM_TABLE_FUSE"],["ROOM_TABLE_FUSE","ROOM_TABLE"]);RAIN_MESH_OUTPUTS.push("ROOM_TABLE");
 
@@ -156,11 +156,11 @@ rainTextureSpecs.forEach(([label,kindA,kindB,accentColor,detailKind="Domain Warp
   {id:blend,name:`${label} · Generic Blend`,type:"TEXTURE COMPOSITION",kind:"Texture Blend",x:315,y:row,color:"#9b7bff",value:"TWO INPUTS",enabled:true},
   {id:detail,name:`${label} · ${detailKind}`,type:"TEXTURE COMPOSITION",kind:detailKind,x:460,y:row,color:"#5da7ff",value:detailKind==="Edge Wear"?"RESTRAINED EDGES":"WEATHER / MICRO",enabled:true},
   {id:palette,name:`${label} · Surface Palette`,type:"TEXTURE COLOR",kind:"Palette Map",x:605,y:row,color:accentColor,value:"ALBEDO / ROUGHNESS",enabled:true,params:{accentColor}},
-  {id:output,name:`${label} · Material Output`,type:"TEXTURE OUTPUT",kind:"Texture Output",runtimeRole:`roomTextureMat${index+1}`,x:750,y:row,color:"#55d887",value:`SURFACE ${index+1} / 15`,enabled:true}
+  {id:output,name:`${label} · Material Output`,type:"TEXTURE OUTPUT",kind:"Texture Output",x:750,y:row,color:"#55d887",value:`SURFACE ${index+1} / 15`,enabled:true}
 );RAIN_TEXTURE_CONNECTIONS.push([a,blend],[b,blend],[blend,detail],[detail,palette],[palette,output]);});
 
 const RAIN_ROOM_PROJECT={
-  name:"RAIN ROOM · REALISTIC INTERIOR",duration:30,bpm:108,showcase:false,visualMode:"realisticRoom",selected:"ROOM_CAMERA",
+  name:"RAIN ROOM · REALISTIC INTERIOR",duration:30,bpm:108,showcase:false,visualMode:"default",selected:"ROOM_CAMERA",
   params:{shapeMode:11,color:"#b35b32",accent:"#55745f",metallic:.18,roughness:.62,twist:.08,bloom:.24,vignette:.05,pulse:.18,scale:1,exposure:1.08,texScale:5.2,texSpeed:.38,texWarp:1.1,texContrast:1.45,texKaleido:4,texMix:.78,multiplyCount:8,multiplySpread:1,audioCutoff:940,audioDecay:.46,audioDelay:.3,audioDrive:.22,synthAttack:.72,synthRelease:2.4,synthDetune:.28,padLevel:.46,arpRate:2,arpOctaves:2,reverbMix:.34,chorusMix:.2,drumTone:.62,mixerGain:.72,showMix:0},audio:{volume:.34},
   nodes:[
     {id:"ROOM_TITLE",name:"Room Captions",type:"TEXT OPERATOR",kind:"Text",x:20,y:12,color:"#b35b32",value:"4 ROOMS",enabled:true,params:{text:"I. RAIN LIVING ROOM",textColor:"#e8dfd2",textSize:18,textX:18,textY:14,textRotation:0,textWave:.02,sequenceStep:7.5,sequence:["I. RAIN LIVING ROOM","II. STONE KITCHEN","III. CREATIVE STUDIO","IV. LINEN BEDROOM"]}},
@@ -174,9 +174,9 @@ const RAIN_ROOM_PROJECT={
     {id:"ROOM_CAM_ROT",name:"Camera Look Spline",type:"SCENE OPERATOR",kind:"Spline Rotation",x:600,y:396,color:"#9b7bff",value:"YAW + PITCH",enabled:true,params:{splineYaw:.07,splinePitch:.08,splineRoll:0,splinePhase:.1}},
     {id:"ROOM_CAM_TARGET_PATH",name:"Twelve-Point Occlusion-Safe Look Route",type:"SCENE OPERATOR",kind:"Spline Path",x:745,y:588,color:"#55d887",value:"DETAIL ↔ OPEN DOOR",enabled:true,params:{p0x:-4.35,p0y:-.24,p0z:-3.5,p1x:-4.9,p1y:-.16,p1z:-3.15,p2x:4.05,p2y:-.22,p2z:-3.55,p3x:4.15,p3y:-.28,p3z:-3.55,p4x:4.8,p4y:-.12,p4z:-3.05,p5x:3.8,p5y:-.12,p5z:4.4,p6x:3.65,p6y:-.16,p6z:4.65,p7x:4.7,p7y:-.08,p7z:4.35,p8x:-4.05,p8y:-.22,p8z:4.5,p9x:-4.05,p9y:-.28,p9z:4.55,p10x:-4.75,p10y:-.1,p10z:4.35,p11x:-4.35,p11y:-.18,p11z:-3.4,splinePointCount:12,splineDuration:30,splinePhase:0}},
     {id:"ROOM_CAM_TRACK",name:"Track Room Details",type:"SCENE OPERATOR",kind:"Spline Target",x:890,y:588,color:"#ff6d42",value:"CAMERA LOOK-AT",enabled:true,params:{trackAhead:.04,trackX:0,trackY:0,trackZ:0,trackStrength:1},bindings:{trackAhead:{source:"sine",amount:.025}}},
-    {id:"ROOM_PARTICLE_RAIN",name:"Window Rain Streaks",type:"PARTICLE OPERATOR",kind:"Particle Emitter",runtimeRole:"roomRainParticles",x:165,y:780,color:"#5da7ff",value:"20 GPU PARTICLES",enabled:true,params:{particleStyle:0,particleCount:20,particleSize:.012,particleSpeed:.82,particleLife:1.15,particleSpread:1.35,particleTurbulence:.22,particleGravity:1.2,particleOpacity:.32},bindings:{particleOpacity:{source:"sine",amount:.08}}},
-    {id:"ROOM_PARTICLE_MIST",name:"Window Mist Drift",type:"PARTICLE OPERATOR",kind:"Particle Emitter",runtimeRole:"roomMistParticles",x:310,y:780,color:"#25c9cd",value:"8 SOFT MOTES",enabled:true,params:{particleStyle:1,particleCount:8,particleSize:.025,particleSpeed:.12,particleLife:2.4,particleSpread:1.05,particleTurbulence:.55,particleGravity:.12,particleOpacity:.055}},
-    {id:"ROOM_PARTICLE_DUST",name:"Warm Interior Dust",type:"PARTICLE OPERATOR",kind:"Particle Emitter",runtimeRole:"roomDustParticles",x:455,y:780,color:"#f1b85b",value:"12 DUST MOTES",enabled:true,params:{particleStyle:2,particleCount:12,particleSize:.01,particleSpeed:.09,particleLife:2.8,particleSpread:1.25,particleTurbulence:.7,particleGravity:.18,particleOpacity:.16},bindings:{particleOpacity:{source:"bar",amount:.06}}},
+    {id:"ROOM_PARTICLE_RAIN",name:"Window Rain Streaks",type:"PARTICLE OPERATOR",kind:"Particle Emitter",x:165,y:780,color:"#5da7ff",value:"20 GPU PARTICLES",enabled:true,params:{particleStyle:0,particleCount:20,particleSize:.012,particleSpeed:.82,particleLife:1.15,particleSpread:1.35,particleTurbulence:.22,particleGravity:1.2,particleOpacity:.32},bindings:{particleOpacity:{source:"sine",amount:.08}}},
+    {id:"ROOM_PARTICLE_MIST",name:"Window Mist Drift",type:"PARTICLE OPERATOR",kind:"Particle Emitter",x:310,y:780,color:"#25c9cd",value:"8 SOFT MOTES",enabled:true,params:{particleStyle:1,particleCount:8,particleSize:.025,particleSpeed:.12,particleLife:2.4,particleSpread:1.05,particleTurbulence:.55,particleGravity:.12,particleOpacity:.055}},
+    {id:"ROOM_PARTICLE_DUST",name:"Warm Interior Dust",type:"PARTICLE OPERATOR",kind:"Particle Emitter",x:455,y:780,color:"#f1b85b",value:"12 DUST MOTES",enabled:true,params:{particleStyle:2,particleCount:12,particleSize:.01,particleSpeed:.09,particleLife:2.8,particleSpread:1.25,particleTurbulence:.7,particleGravity:.18,particleOpacity:.16},bindings:{particleOpacity:{source:"bar",amount:.06}}},
     {id:"ROOM_CER_ANCHOR",name:"Walnut Table Anchor",type:"SCENE OPERATOR",kind:"Mesh Anchor",x:745,y:396,color:"#b35b32",value:"TABLE LOCAL",enabled:true,params:{anchorX:0,anchorY:.17,anchorZ:0}},
     {id:"ROOM_CER_PATH",name:"Ceramic Orbit Spline",type:"SCENE OPERATOR",kind:"Spline Path",x:890,y:396,color:"#55d887",value:"MESH-RELATIVE",enabled:true,params:{p0x:-.16,p0y:0,p0z:0,p1x:0,p1y:.08,p1z:.12,p2x:.16,p2y:0,p2z:0,p3x:0,p3y:.04,p3z:-.1,splineDuration:7.5,splinePhase:.2}},
     {id:"ROOM_CER_ROT",name:"Ceramic Turn Spline",type:"SCENE OPERATOR",kind:"Spline Rotation",x:165,y:492,color:"#9b7bff",value:"ONE TURN",enabled:true,params:{splineYaw:.5,splinePitch:0,splineRoll:0,splinePhase:0}},
@@ -184,9 +184,9 @@ const RAIN_ROOM_PROJECT={
     {id:"ROOM_CHAIR_ANCHOR",name:"Studio Desk Anchor",type:"SCENE OPERATOR",kind:"Mesh Anchor",x:455,y:492,color:"#5da7ff",value:"DESK LOCAL",enabled:true,params:{anchorX:2.2,anchorY:-.04,anchorZ:-.17}},
     {id:"ROOM_CHAIR_PATH",name:"Chair Glide Spline",type:"SCENE OPERATOR",kind:"Spline Path",x:600,y:492,color:"#55d887",value:"MESH-RELATIVE",enabled:true,params:{p0x:-.18,p0y:0,p0z:0,p1x:.08,p1y:0,p1z:.12,p2x:.18,p2y:0,p2z:0,p3x:-.06,p3y:0,p3z:-.1,splineDuration:7.5,splinePhase:.5}},
     {id:"ROOM_CHAIR_ATTACH",name:"Chair Spline Attachment",type:"SCENE OPERATOR",kind:"Attach to Spline",x:745,y:492,color:"#f1b85b",value:"CHAIR + PATH",enabled:true,params:{attachX:0,attachY:0,attachZ:0,attachStart:.1,attachSpeed:.7,attachOrient:.7}},
-    {id:"ROOM_SURFACES",name:"Layered Real Materials",type:"MATERIAL OPERATOR",kind:"Normal Map",runtimeRole:"roomMaterials",x:600,y:108,color:"#b35b32",value:"PLASTER / WOOD / LINEN",enabled:true},
-    {id:"ROOM_CAMERA",name:"Four-Room Camera Tour",type:"SCENE OPERATOR",kind:"Camera",runtimeRole:"roomCamera",x:745,y:300,color:"#f1b85b",value:"4 × 7.5 SEC",enabled:true,bindings:{cameraPitch:{source:"sine",amount:.035}}},
-    {id:"ROOM_OUT",name:"House Tour Output",type:"OUTPUT OPERATOR",kind:"Output",runtimeRole:"roomOutput",x:890,y:300,color:"#ff5a36",value:"00:30 LOOP",enabled:true}
+    {id:"ROOM_SURFACES",name:"Layered Real Materials",type:"MATERIAL OPERATOR",kind:"Normal Map",x:600,y:108,color:"#b35b32",value:"PLASTER / WOOD / LINEN",enabled:true},
+    {id:"ROOM_CAMERA",name:"Four-Room Camera Tour",type:"SCENE OPERATOR",kind:"Camera",x:745,y:300,color:"#f1b85b",value:"4 × 7.5 SEC",enabled:true,bindings:{cameraPitch:{source:"sine",amount:.035}}},
+    {id:"ROOM_OUT",name:"House Tour Output",type:"OUTPUT OPERATOR",kind:"Output",x:890,y:300,color:"#ff5a36",value:"00:30 LOOP",enabled:true}
   ],
   connections:[
     ["ROOM_TITLE","ROOM_OUT"],["ROOM_CLOCK","ROOM_LIGHT"],
